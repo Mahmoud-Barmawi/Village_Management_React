@@ -1,0 +1,220 @@
+.stylePopups {
+    width: 550px;
+    height: fit-content;
+    background: #2D3748;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-direction: column;
+    padding: 25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    border: 2px solid #4A5463;
+    z-index: 10;
+  }
+  main #addVillageBtn {
+    cursor: pointer;
+    width: fit-content;
+    padding: 12px;
+    border-radius: 5px;
+    font-family: Sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    background: #4A5568;
+    color: #E5E7EB;
+    outline: none;
+    border: none;
+  }
+  main .content {
+    background: #2D3748;
+    padding: 25px;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 7px;
+  }
+  main .content h2 {
+    color: #D1D5DB;
+    margin-bottom: 20px;
+  }
+  main .content #searchVillagesIn {
+    cursor: select;
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    font-family: Sans-serif;
+    font-size: 1rem;
+    font-weight: initial;
+    background: #374151;
+    color: #E5E7EB;
+    outline: none;
+    border: none;
+    border: 2px solid #4A5463;
+  }
+  main .content #searchVillagesIn::-webkit-input-placeholder {
+    font-family: Sans-serif;
+    font-size: 1rem;
+    color: #9FA6B2;
+  }
+  main .content .orderAndPagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+  }
+  main .content .orderAndPagination .label {
+    font-size: 1rem;
+    color: #E5E7EB;
+  }
+  main .content .orderAndPagination .select-box select {
+    border-radius: 8px;
+    padding: 10px;
+    background: #374151;
+    color: #E5E7EB;
+    outline: none;
+    border: 2px solid #4A5463;
+  }
+  @media (max-width: 768px) {
+    main .content .orderAndPagination .pagination label {
+      display: block;
+    }
+  }
+  main .content .orderAndPagination .pagination input {
+    cursor: pointer;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: Sans-serif;
+    font-size: 0.9rem;
+    font-weight: bold;
+    background: #718096;
+    color: #E5E7EB;
+    outline: none;
+    border: none;
+  }
+  main .content .villages {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px;
+    padding: 20px;
+    background: #374151;
+    color: #E5E7EB;
+    margin-top: 20px;
+  }
+  @media (max-width: 1184px) {
+    main .content .villages {
+      flex-direction: column;
+    }
+  }
+  main .content .villages .villageName {
+    cursor: pointer;
+    color: #D1D5DB;
+    font-size: 1.1rem;
+  }
+  @media (max-width: 1184px) {
+    main .content .villages .villageName {
+      margin-bottom: 10px;
+    }
+  }
+  main .content .villages .btnsToShowData {
+    display: flex;
+    gap: 5px;
+  }
+  @media (max-width: 768px) {
+    main .content .villages .btnsToShowData {
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+  main .content .villages .btnsToShowData input {
+    cursor: pointer;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: Sans-serif;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background: #718096;
+    color: #E5E7EB;
+    outline: none;
+    border: none;
+  }
+  @media (max-width: 961px) {
+    main .content .villages .btnsToShowData input {
+      width: 100%;
+    }
+  }
+  main .btns {
+    cursor: pointer;
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    font-family: Sans-serif;
+    font-size: 1rem;
+    font-weight: initial;
+    background: #4A5568;
+    color: #E5E7EB;
+    outline: none;
+    border: none;
+    margin-top: 5px;
+  }
+  main #view-village-div #content {
+    width: 100%;
+  }
+  main #view-village-div #content p {
+    padding: 3px;
+  }
+  main #view-village-div #content .view-title {
+    font-weight: bold;
+  }
+  main #view-village-div #content img {
+    margin-top: 20px;
+  }
+  main .title {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  main .title p {
+    color: #718096;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+  .villageDetails {
+    width: 100%;
+  }
+  .villageDetails .btns {
+    cursor: select;
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    font-family: Sans-serif;
+    font-size: 1rem;
+    font-weight: initial;
+    background: #374151;
+    color: #E5E7EB;
+    outline: none;
+    border: none;
+    border: 2px solid #4A5463;
+  }
+  #overlay {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+  #overlay.active {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.7);
+    pointer-events: all;
+  }
+  

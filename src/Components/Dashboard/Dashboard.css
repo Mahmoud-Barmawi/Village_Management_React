@@ -63,7 +63,7 @@ aside nav {
     width: 100%;
 }
 
-aside nav a {
+aside nav .nav-link {
     color: #D1D5DB;
     text-decoration: none;
     padding: 10px 0 10px 20px;
