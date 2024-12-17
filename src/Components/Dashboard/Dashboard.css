@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    color: #D1D5DB;
+    font-family: Sans-serif;
+    background-color: #1B202B;
+    display: flex;
+}
+
+main {
+    width: 100%;
+    margin: 20px 30px 30px 280px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #D1D5DB;
+    border-radius: 50%;
+}
+
+aside {
+    background-color: #212936;
+    height: 100vh;
+    width: 250px;
+    display: flex;
+    position: fixed;
+    flex-shrink: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: 0.2s linear;
+}
+
+aside #upper-div {
+    width: 100%;
+}
+
+aside #upper-div h1 {
+    margin: 20px 0 0 20px;
+    color: #E5E7EB;
+}
+
+aside #lower-div {
+    display: flex;
+    align-items: center;
+    margin: 0 0 20px 20px;
+    gap: 10px;
+}
+
+aside #lower-div a {
+    color: #ef4444;
+    text-decoration: none;
+}
+
+aside nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    width: 100%;
+}
+
+aside nav a {
+    color: #D1D5DB;
+    text-decoration: none;
+    padding: 10px 0 10px 20px;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+aside nav a:hover {
+    background-color: #2D3748;
+}
+
+@media (max-width: 961px) {
+    main {
+        margin: 20px 30px 120px 30px;
+    }
+
+    aside {
+        z-index: 10;
+        background-color: #212936;
+        height: fit-content;
+        width: 100%;
+        margin: 0px;
+        bottom: 0 !important;
+        margin-top: 100px !important;
+        justify-content: space-between;
+        align-items: center;
+        transition: 0.2s;
+    }
+
+    aside #upper-div h1 {
+        display: none;
+    }
+
+    aside #lower-div {
+        align-items: center;
+        background: #2D3748;
+        width: 100%;
+        justify-content: space-evenly;
+        margin: 0px;
+        gap: 5px;
+        padding: 5px;
+    }
+
+    aside nav {
+        text-align: center;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0px;
+        width: 100%;
+        padding: 10px 0px;
+    }
+}
