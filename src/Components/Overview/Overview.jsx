@@ -12,10 +12,11 @@ const Overview = () => {
           <h1>Overview</h1> 
         <div className="grid-div">
           <Map/>
-          <InfoCard content={'Total Number of Villages 8'} number={'info-1'} />
-          <InfoCard content={'Total Number of Urban Areas 3'} number={'info-2'} />
-          <InfoCard content={'Total Population Size 660000'} number={'info-3'} />
-          <InfoCard content={'Average Land Area 11.88'} number={'info-4'} />
+          <InfoCard content={'Total Number of Villages '} value={8} id={'info-1'} />
+          <InfoCard content={'Total Number of Urban Areas '} value={3} id={'info-2'} />
+          <InfoCard content={'Total Population Size '} value={11.5} id={'info-3'} />
+          <InfoCard content={'Average Land Area '} value={650} id={'info-4'} />
+
           <PieChart title={"test1"} colors={["#2F71A3", "#A74C65"]}
             xValues={["Male", "Female"]} yValues={[60, 40]} id={"pie-chart-1"} />
           <PieChart title={"test1"} colors={[
