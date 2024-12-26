@@ -3,6 +3,7 @@ import  './Overview.css'
 import PieChart from './PieChart';
 import InfoCard from './InfoCard.jsx';
 import Map from './Map.jsx';
+import BarChart from './BarChart.jsx';
 
 const Overview = () => {
     return (
@@ -24,6 +25,7 @@ const Overview = () => {
             "#3C8489",
             "#684EAF"]}
             xValues={["0-18", "19-35", "36-50", "51-65", "65+"]} yValues={[55, 49, 44, 24, 15]} id={"pie-chart-2"} />
+            <BarChart/>
         </div>
       </main>
     </>
