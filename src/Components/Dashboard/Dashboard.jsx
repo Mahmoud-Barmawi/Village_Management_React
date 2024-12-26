@@ -9,7 +9,7 @@ const Dashboard = () => {
     <h1>Dashboard</h1>
     <nav>
       <Link  to="/" className="nav-link">Overview</Link>
-      <Link   to="/villageManagment" className="nav-link" >Village Managment</Link>
+      <Link   to="/villageManagment" className="nav-link" >Village Management</Link>
       <Link  to="/chat" className="nav-link">Chat</Link>
       <Link  to="/gallery" className="nav-link">Gallery</Link>
     </nav>
