@@ -4,6 +4,8 @@ import Overview from './Components/Overview/Overview.jsx'
 import Gallery from './Components/Gallery/Gallery.jsx'
 import Chat from './Components/Chat/Chat.jsx'
 import VillageManagment from './Components/VillageManagment/VillageManagment.jsx'
+import Signup from './Components/Signup/Signup.jsx'
+import Signin from './Components/Signin/Signin.jsx'
 function App() {
 
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
         </Routes>
       </BrowserRouter >
+      {/* <Signin/> */}
+        {/* <Signup/> */}
     </>
   )
 }

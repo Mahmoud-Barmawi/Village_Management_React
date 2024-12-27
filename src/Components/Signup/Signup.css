@@ -1,0 +1,95 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main {
+    background: #1B202B;
+    width: 100%;
+    height: 100vh;
+    font-family: Sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.main .content {
+    width: 420px;
+    height: 450px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #212936;
+    margin-top: 0;
+}
+
+.main .content h2 {
+    text-align: center;
+    color: #D1D5DB;
+    margin: 0 !important;
+}
+
+.main .content .fullname,
+.main .content .username,
+.main .content .password {
+    display: flex;
+    flex-direction: column;
+    color: #D1D5DB;
+    width: 360px;
+    margin: 15px 0px;
+}
+
+.main .content .fullname label,
+.main .content .username label,
+.main .content .password label {
+    font-size: 1.2rem;
+}
+
+.main .content .fullname input,
+.main .content .username input,
+.main .content .password input {
+    padding: 13px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-family: Sans-serif;
+    font-size: 1rem;
+}
+
+.main .content .fullname input:focus,
+.main .content .username input:focus,
+.main .content .password input:focus {
+    border: 4px solid #4E80EE;
+}
+
+.main .content .fullname input::-webkit-input-placeholder,
+.main .content .username input::-webkit-input-placeholder,
+.main .content .password input::-webkit-input-placeholder {
+    font-family: Sans-serif;
+    font-size: 1rem;
+}
+
+.main .content .myButton {
+    background-color: #4E80EE;
+    color: #E5E7EB;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.1rem;
+    width: 350px;
+    margin: 15px 0px;
+    padding: 13px;
+    border-radius: 8px;
+}
+
+.main .content p {
+    color: #9CA4B0;
+}
+
+.main .content p a {
+    text-decoration: none;
+    color: #4E80EE;
+}

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 
 export default function Popup({ type, title, fields, btn, closeFn,fromBtnFn}) {
-  // type => true means Form, false means view
 
   return (
     <>
