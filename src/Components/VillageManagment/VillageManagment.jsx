@@ -6,8 +6,19 @@ import VillageElement from "./villageElement";
 import { useEffect } from "react";
 
 const VillageManagment = () => {
+  const addNewVillage=["Village Name","Region/District","Land Area (sq km)","Latitude","Longitude","Upload Image","Categories/Tags"]
+  const updateVillage=["Village Name","Region/District","Land Area (sq km)","Latitude","Longitude","Upload Image"]
+  const updateDemographicData=["Population Size","Age Distribution","Gender Ratios","Population Growth Rate"]
 
+  const [showPopup,setShowPopup]=useState(true);
   const [villages,setVillages] = useState([]);
+
+  function ClosePopup(){
+    setShowPopup(false);
+  }
+  function OpenPopup(){
+    setShowPopup(true);
+  }
   useEffect(()=>{
     //fetch data
     setVillages([
@@ -36,6 +47,11 @@ const VillageManagment = () => {
   return (
     <>
       <main>
+        {showPopup&& <Popup type={"form"} title={"Add New Village"} fields={addNewVillage} btn={"Add Village"} closeFn={ClosePopup} />}      
+        {showPopup && <Popup type={"view"} title={"Village Details"} fields={addNewVillage} closeFn={ClosePopup} />}
+        {showPopup && <Popup type={"form"} title={"Update Village"} fields={updateVillage} btn={"Update Village"} closeFn={ClosePopup} />}
+        {showPopup && <Popup type={"form"} title={"Add Demographic Data for Beit Sahour"} fields={updateDemographicData} btn={"Add Demographic Data"} closeFn={ClosePopup} />}
+
         <MyButton value={"Add New Village"} id={'addVillageBtn'} />
         <div className="content">
           <h2>View Village List</h2>
