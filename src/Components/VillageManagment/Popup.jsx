@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-export default function Popup({ type, title, fields, btn, closeFn }) {
+export default function Popup({ type, title, fields, btn, closeFn,fromBtnFn}) {
   // type => true means Form, false means view
 
   return (
@@ -14,12 +14,12 @@ export default function Popup({ type, title, fields, btn, closeFn }) {
             </p>
           </div>
           <div id="content" >
-          {fields.map((ele, index) => {
-            return (
-                    <p key={index}><span className="view-title">{ele}: </span><span id="view-name">hello test</span></p>
-            );
-          })}
-        </div>
+            {fields.map((ele, index) => {
+              return (
+                <p key={index}><span className="view-title">{ele}: </span><span id="view-name">hello test</span></p>
+              );
+            })}
+          </div>
         </div>
       ) : (
         <div className="stylePopups">
@@ -41,7 +41,7 @@ export default function Popup({ type, title, fields, btn, closeFn }) {
               </div>
             );
           })}
-          <input type="button" value={btn} className="btns" />
+          <input onClick={fromBtnFn} type="button" value={btn} className="btns" />
         </div>
       )}
       <div id="overlay" className="active"></div>
