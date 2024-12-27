@@ -16,7 +16,7 @@ function App() {
           <Route path="/chat" element={<Chat />} />
           <Route path="/gallery" element={<Gallery />} />
         </Routes>
-      </BrowserRouter > `
+      </BrowserRouter >
     </>
   )
 }
