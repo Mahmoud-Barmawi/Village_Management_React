@@ -19,9 +19,9 @@ const VillageManagment = () => {
     <main>
       Village Managment
      {showPopup&& <Popup type={"form"} title={"Add New Village"} fields={addNewVillage} btn={"Add Village"} closeFn={ClosePopup} />}      
-     {/* {showPopup&& <Popup type={"view"} title={"Village Details"} fields={addNewVillage}  closeFn={ClosePopup} />}       */}
-     {/* {showPopup&& <Popup type={"form"} title={"Add New Village"} fields={addNewVillage} btn={"Add Village"} closeFn={ClosePopup} />}       */}
-     {/* {showPopup&& <Popup type={"form"} title={"Add Demographic Data for Beit Sahour"} fields={updateDemographicData} btn={"Add Demographic Data"} closeFn={ClosePopup} />}       */}
+     {showPopup&& <Popup type={"view"} title={"Village Details"} fields={addNewVillage}  closeFn={ClosePopup} />}      
+     {showPopup&& <Popup type={"form"} title={"Add New Village"} fields={addNewVillage} btn={"Add Village"} closeFn={ClosePopup} />}      
+     {showPopup&& <Popup type={"form"} title={"Add Demographic Data for Beit Sahour"} fields={updateDemographicData} btn={"Add Demographic Data"} closeFn={ClosePopup} />}      
 
     </main>
   );
