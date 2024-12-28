@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-      {/* <BrowserRouter>
+      <BrowserRouter>
         <Dashboard />
         <Routes>
           <Route path="/" element={<Overview />} />
@@ -18,9 +18,9 @@ function App() {
           <Route path="/chat" element={<Chat />} />
           <Route path="/gallery" element={<Gallery />} />
         </Routes>
-      </BrowserRouter > */}
+      </BrowserRouter >
       {/* <Signin/> */}
-        <Signup/>
+        {/* <Signup/> */}
     </>
   )
 }

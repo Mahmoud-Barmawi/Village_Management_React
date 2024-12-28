@@ -7,20 +7,35 @@ export default function Popup({
   fields,
   btn,
   closeFn,
-  fromBtnFn,
+  formBtnFn,
+  villageView
 }) {
+
   const [formData, setFormData] = useState({});
+
+  const map= {
+    "Village Name": "villageName",
+    "Region/District": "regionDistrict",
+    "Land Area (sq km)": "landArea",
+    "Latitude": "latitude",
+    "Longitude": "longitude",
+    "Upload Image": "image",
+    "Categories/Tags": "categories",
+    "Population Size": "populationSize",
+    "Age Distribution": "ageDistribution",
+    "Gender Ratios": "genderRatios",
+    "Population Growth Rate": "populationGrowthRate"
+  };
+
+  function getCorrectText(field) {
+    const key = map[field];
+    return villageView[key];
+  }
 
   const handleInputChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
 
-  const handleSubmit = () => {
-    console.log(formData);
-    if (fromBtnFn) {
-      fromBtnFn(formData);
-    }
-  };
   return (
     <>
       {type === "view" ? (
@@ -36,7 +51,7 @@ export default function Popup({
               return (
                 <p key={index}>
                   <span className="view-title">{ele}: </span>
-                  <span id="view-name">hello test</span>
+                  <span id="view-name">{getCorrectText(ele)}</span>
                 </p>
               );
             })}
@@ -62,7 +77,7 @@ export default function Popup({
           ))}
 
           <input
-            onClick={handleSubmit}
+            onClick={()=>formBtnFn(formData)}
             type="button"
             value={btn}
             className="btns"

@@ -5,6 +5,7 @@ import MyTextInput from "../SharedComponents/MyTextInput";
 import VillageElement from "./villageElement";
 import { useEffect } from "react";
 import Popup from "./Popup";
+import { gql, request } from 'graphql-request'
 
 const VillageManagment = () => {
   const addNewVillage=["Village Name","Region/District","Land Area (sq km)","Latitude","Longitude","Upload Image","Categories/Tags"]
@@ -13,6 +14,8 @@ const VillageManagment = () => {
 
   const [showPopup,setShowPopup]=useState([false,false,false,false]);
   const [villages,setVillages] = useState([]);
+  const [villageView, setVillageView] = useState({ id: 2 });
+  const [dataChanged,setDataChanged] = useState({});
 
   function closePopup(i){
     const showArray=[...showPopup];
@@ -26,18 +29,55 @@ const VillageManagment = () => {
     setShowPopup(showArray);
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     //fetch data
-    setVillages([
-      {id:1,villageName:'aboJalal',regionDistrict:'abomouse'},
-      {id:2,villageName:'abo',regionDistrict:'two'},
-      {id:3,villageName:'test',regionDistrict:'testo'}
-    ]);
-  },[])
+    const document = gql`
+    query ExampleQuery {
+      villages {
+        id,
+        villageName,
+        regionDistrict,
+      }
+    }`
 
-  function viewFn(id){
-    openPopup(1);
+    async function fetchVillages(){
+      let response=await request('http://localhost:3000/graphql', document)
+      setVillages(response.villages);
+    }
+
+    fetchVillages();
+  },[dataChanged])
+
+  function viewFn(id) {
+    const document = gql`
+    query ExampleQuery {
+      village(id: "${id}") {
+        id
+        villageName
+        regionDistrict
+        landArea
+        latitude
+        longitude
+        image
+        populationSize
+        populationGrowthRate
+        ageDistribution
+        genderRatios
+      }
+    }
+  `;
+
+    async function fetchVillageView() {
+      let response = await request('http://localhost:3000/graphql', document);
+      console.log(response.village);//log correclty
+      setVillageView(response.village);
+      openPopup(1);
+    }
+    fetchVillageView();
+
   }
+
+
   function updateFn(id){
     openPopup(2);
   }
@@ -48,11 +88,55 @@ const VillageManagment = () => {
     //delete
   }
 
+
+  function addVillage(data) {
+    setDataChanged(data);
+    const map = {
+      "Village Name": "villageName",
+      "Region/District": "regionDistrict",
+      "Land Area (sq km)": "landArea",
+      "Latitude": "latitude",
+      "Longitude": "longitude",
+      "Upload Image": "image",
+      "Categories/Tags": "categories",
+      "Population Size": "populationSize",
+      "Age Distribution": "ageDistribution",
+      "Gender Ratios": "genderRatios",
+      "Population Growth Rate": "populationGrowthRate"
+    };
+
+    const document = gql`
+    mutation ExampleQuery{
+      addVillage(
+        villageName: "${data["Village Name"]}",
+        regionDistrict:"${data["Region/District"]}",
+        landArea:${data["Land Area (sq km)"]},
+        latitude:${data["Latitude"]},
+        longitude:${data["Longitude"]},
+        tags:["${data["Categories/Tags"]}"],
+        image:"hello.png"
+    ) {
+      id
+      }
+  }
+  `;
+    async function fetchAddVilage() {
+      try {
+        let response = await request('http://localhost:3000/graphql', document);
+        console.log(response);
+      }catch(error){
+        console.log(error);
+        
+      }
+    }
+    fetchAddVilage();
+  }
+
   return (
     <>
       <main>
-        {showPopup[0] && <Popup type={"form"} title={"Add New Village"} fields={addNewVillage} btn={"Add Village"} closeFn={()=>closePopup(0)} />}      
-        {showPopup[1] && <Popup type={"view"} title={"Village Details"} fields={addNewVillage} closeFn={()=>closePopup(1)} />}
+        {showPopup[0] && <Popup type={"form"} title={"Add New Village"} formBtnFn={addVillage} fields={addNewVillage} btn={"Add Village"} closeFn={()=>closePopup(0)} />}      
+        {showPopup[1] && <Popup type={"view"} title={"Village Details"} villageView={villageView} fields={addNewVillage} closeFn={()=>closePopup(1)} />}
         {showPopup[2] && <Popup type={"form"} title={"Update Village"} fields={updateVillage} btn={"Update Village"} closeFn={()=>closePopup(2)} />}
         {showPopup[3] && <Popup type={"form"} title={"Add Demographic Data for Beit Sahour"} fields={updateDemographicData} btn={"Add Demographic Data"} closeFn={()=>closePopup(3)} />}
 
@@ -80,12 +164,12 @@ const VillageManagment = () => {
           <div id="villages">
             {/* <VillageElement villageName={'jalal'} regionDistrict={"abo mouse"} admin={false} /> */}
             {
-              villages.map((v)=>{
+              ((villages.length!=0)?villages.map((v)=>{
                 return(
                   <VillageElement key={v.id} villageName={v.villageName} regionDistrict={v.regionDistrict} admin={true}
                   id={v.id} viewFn={viewFn} updateFn={updateFn} updateDFn={updateDFn} deleteFn={deleteFn} />
                 )
-              })
+              }):<div></div>)
             }
           </div>
 
