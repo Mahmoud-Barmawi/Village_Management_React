@@ -1,7 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import FormField from "../SharedComponents/FormField";
 
-export default function Popup({ type, title, fields, btn, closeFn,fromBtnFn}) {
+export default function Popup({
+  type,
+  title,
+  fields,
+  btn,
+  closeFn,
+  fromBtnFn,
+}) {
+  const [formData, setFormData] = useState({});
 
+  const handleInputChange = (field, value) => {
+    setFormData({ ...formData, [field]: value });
+  };
+
+  const handleSubmit = () => {
+    console.log(formData);
+    if (fromBtnFn) {
+      fromBtnFn(formData);
+    }
+  };
   return (
     <>
       {type === "view" ? (
@@ -12,10 +31,13 @@ export default function Popup({ type, title, fields, btn, closeFn,fromBtnFn}) {
               &times;
             </p>
           </div>
-          <div id="content" >
+          <div id="content">
             {fields.map((ele, index) => {
               return (
-                <p key={index}><span className="view-title">{ele}: </span><span id="view-name">hello test</span></p>
+                <p key={index}>
+                  <span className="view-title">{ele}: </span>
+                  <span id="view-name">hello test</span>
+                </p>
               );
             })}
           </div>
@@ -28,19 +50,23 @@ export default function Popup({ type, title, fields, btn, closeFn,fromBtnFn}) {
               &times;
             </p>
           </div>
-          {fields.map((ele, index) => {
-            return (
-              <div className="villageDetails" key={index}>
-                <label>{ele}:</label>
-                {ele === "Upload Image" ? (
-                  <input type="file" className="btns" />
-                ) : (
-                  <input type="text" className="btns" />
-                )}
-              </div>
-            );
-          })}
-          <input onClick={fromBtnFn} type="button" value={btn} className="btns" />
+          {fields.map((field, index) => (
+            <FormField
+              key={index}
+              parentClass={"villageDetails"}
+              label={field}
+              placeholder={`Enter your ${field.toLowerCase()}`}
+              onChange={(e) => handleInputChange(field, e.target.value)}
+              className={"btns"}
+            />
+          ))}
+
+          <input
+            onClick={handleSubmit}
+            type="button"
+            value={btn}
+            className="btns"
+          />
         </div>
       )}
       <div id="overlay" className="active"></div>

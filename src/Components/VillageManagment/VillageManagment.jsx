@@ -59,7 +59,7 @@ const VillageManagment = () => {
         <MyButton value={"Add New Village"} id={'addVillageBtn'} btnFn={()=>openPopup(0)}/>
         <div className="content">
           <h2>View Village List</h2>
-          <MyTextInput id={'searchVillagesIn'} placeholder={'Search Villages...'} />
+          <MyTextInput type={"text"} id={'searchVillagesIn'} placeholder={'Search Villages...'} />
           <div className="orderAndPagination">
 
             <div className="select-box">

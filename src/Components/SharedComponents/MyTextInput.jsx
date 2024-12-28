@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function MyTextInput({id, placeholder, className, value, onChange}) {
+export default function MyTextInput({id,type ,placeholder, className, value, onChange}) {
   return (
     <input 
-      type="text" 
+      type={type} 
       name="" 
       id={id} 
       placeholder={placeholder} 
