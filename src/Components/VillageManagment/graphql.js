@@ -1,16 +1,17 @@
-import { gql } from 'graphql-request'
+import { gql } from "graphql-request";
 
 export const villagesGQL = gql`
-    query ExampleQuery {
-      villages {
-        id,
-        villageName,
-        regionDistrict,
-      }
-    }`
+  query ExampleQuery {
+    villages {
+      id
+      villageName
+      regionDistrict
+    }
+  }
+`;
 
-export function addVillageGQL(data){
-	return gql`
+export function addVillageGQL(data) {
+  return gql`
 	mutation ExampleQuery{
 		addVillage(
 		villageName: "${data["Village Name"]}",
@@ -27,16 +28,16 @@ export function addVillageGQL(data){
 	`;
 }
 export function deleteVillageGQL(id) {
-	return gql`
+  return gql`
 	mutation ExampleQuery{
 		deleteVillage(
 			id:"${id}"
 		)
-	}`
+	}`;
 }
 
 export function viewVillageGQL(id) {
-	return gql`
+  return gql`
 	query ExampleQuery {
 		village(id: "${id}") {
 		id
@@ -54,8 +55,8 @@ export function viewVillageGQL(id) {
 	}
 	`;
 }
-export function updateVillageGQL(id,data) {
-	return gql`mutation ExampleQuery{
+export function updateVillageGQL(id, data) {
+  return gql`mutation ExampleQuery{
 		updateVillage(
 		id:"${id}",
 		villageName: "${data["Village Name"]}",
@@ -72,17 +73,17 @@ export function updateVillageGQL(id,data) {
 }
 
 export function updateDVillageGQL(id, data) {
-	// console.log(data["Population Size"]);
-	// console.log(data["Gender Ratios"]);
-	// console.log(data["Gender Ratios"]);
-	
-	return gql`mutation ExampleQuery{
+  // console.log(data["Population Size"]);
+  // console.log(data["Gender Ratios"]);
+  // console.log(data["Gender Ratios"]);
+
+  return gql`mutation ExampleQuery{
 		updateVillage(
 		id:"${id}",
 		populationSize: ${data["Population Size"]},
 		populationGrowthRate: ${data["Population Growth Rate"]},
-		ageDistribution: [${Number(data["Age Distribution"])}],
-		genderRatios: [${Number(data["Gender Ratios"])}]
+		ageDistribution: ${data["Age Distribution"]},
+		genderRatios: ${data["Gender Ratios"]}
 	) {
 		id
 	  }
