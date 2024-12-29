@@ -1,5 +1,15 @@
 import { gql } from "graphql-request";
 
+export function villageNameGQL(id) {
+  return gql`
+	query ExampleQuery {
+		village(id: "${id}") {
+		villageName
+		}
+	}
+	`;
+}
+
 export const villagesGQL = gql`
   query ExampleQuery {
     villages {
@@ -73,17 +83,13 @@ export function updateVillageGQL(id, data) {
 }
 
 export function updateDVillageGQL(id, data) {
-  // console.log(data["Population Size"]);
-  // console.log(data["Gender Ratios"]);
-  // console.log(data["Gender Ratios"]);
-
   return gql`mutation ExampleQuery{
 		updateVillage(
 		id:"${id}",
 		populationSize: ${data["Population Size"]},
 		populationGrowthRate: ${data["Population Growth Rate"]},
-		ageDistribution: ${data["Age Distribution"]},
-		genderRatios: ${data["Gender Ratios"]}
+		ageDistribution: [${data["Age Distribution"]}],
+		genderRatios: [${data["Gender Ratios"]}]
 	) {
 		id
 	  }

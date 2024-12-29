@@ -18,6 +18,7 @@ const VillageManagment = () => {
   const [villageView, setVillageView] = useState({ id: 2 });
   const [dataChanged,setDataChanged] = useState({});
   const [currentID,setCurrentID] = useState({});
+  const [vName,setVName] = useState();
 
   function closePopup(i){
     const showArray=[...showPopup];
@@ -56,7 +57,14 @@ const VillageManagment = () => {
   }
 
   function updateDFn(id){
-    setCurrentID(id);
+    async function fetchVillageName() {
+      let response = await request('http://localhost:3000/graphql', gql.villageNameGQL(id));
+      setCurrentID(id);
+      setDataChanged(response);
+      setVName(response.village.villageName);
+    }
+
+    fetchVillageName();
     openPopup(3);
   }
   function deleteFn(id){
@@ -97,7 +105,7 @@ const VillageManagment = () => {
         {showPopup[0] && <Popup type={"form"} title={"Add New Village"} formBtnFn={addVillage} fields={addNewVillage} btn={"Add Village"} closeFn={()=>closePopup(0)} />}      
         {showPopup[1] && <Popup type={"view"} title={"Village Details"} villageView={villageView} fields={addNewVillage} closeFn={()=>closePopup(1)} />}
         {showPopup[2] && <Popup type={"form"} title={"Update Village"} formBtnFn={updateVillageFn} fields={updateVillage} btn={"Update Village"} closeFn={()=>closePopup(2)} />}
-        {showPopup[3] && <Popup type={"form"} title={"Add Demographic Data for Beit Sahour"} formBtnFn={updateDVillageFn} fields={updateDemographicData} btn={"Add Demographic Data"} closeFn={()=>closePopup(3)} />}
+        {showPopup[3] && <Popup type={"form"} title={"Add Demographic Data for "+vName} formBtnFn={updateDVillageFn} fields={updateDemographicData} btn={"Add Demographic Data"} closeFn={()=>closePopup(3)} />}
 
         <MyButton value={"Add New Village"} id={'addVillageBtn'} btnFn={()=>openPopup(0)}/>
         <div className="content">
