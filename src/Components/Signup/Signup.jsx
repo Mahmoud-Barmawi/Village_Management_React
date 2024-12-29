@@ -3,8 +3,12 @@ import MyButton from "../SharedComponents/MyButton";
 import DynamicText from "../SharedComponents/DynamicText";
 import FormField from "../SharedComponents/FormField";
 import "./Signup.css";
+import { request } from "graphql-request";
+import * as gql from "../VillageManagment/graphql.js";
+import {useNavigate } from 'react-router-dom'
 
 export default function Signup() {
+  const navigate = useNavigate() 
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -19,12 +23,24 @@ export default function Signup() {
   };
 
   const handleSubmit = () => {
-    console.log("Full Name:", fullName);
-    console.log("Username:", username);
-    console.log("Password:", password);
+    let data = {
+      fullName,
+      username,
+      password,
+    };
+    async function fetchSignup() {
+      let response = await request(
+        "http://localhost:3000/graphql",
+        gql.addUserGQL(data)
+      );
+      setDataChanged(data);
+    }
+    fetchSignup();
     setFullName("");
     setUsername("");
     setPassword("");
+    navigate('/signin')
+
   };
 
   return (

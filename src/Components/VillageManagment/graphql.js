@@ -96,3 +96,17 @@ export function updateDVillageGQL(id, data) {
 	}
 	`;
 }
+
+export function addUserGQL(data) {
+  return gql`
+    mutation ExampleQuery {
+      addUser(
+        fullName:"${data.fullName}",
+        username:"${data.username}",
+        password: "${data.password}"
+      ) {
+        id
+      }
+    }
+  `;
+}

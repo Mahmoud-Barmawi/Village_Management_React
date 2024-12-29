@@ -6,6 +6,7 @@ import VillageElement from "./villageElement";
 import { useEffect } from "react";
 import Popup from "./Popup";
 import { request } from 'graphql-request'
+
 import * as gql from './graphql.js'
 
 const VillageManagment = () => {
