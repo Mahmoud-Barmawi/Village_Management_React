@@ -10,12 +10,14 @@ export function villageNameGQL(id) {
 	`;
 }
 
-export const villagesGQL = gql`
+export const villagesGQL =(page,limit)=> gql`
   query ExampleQuery {
-    villages {
+    villages(page:${page},limit:${limit}){
+	villages{
       id
       villageName
       regionDistrict
+	},count
     }
   }
 `;
@@ -150,8 +152,10 @@ export function loginUserGQL(data) {
         username: "${data.username}",
         password: "${data.password}"
         ) {
-		token,userId,username
-        }
+		token,
+		userId,
+		userName
+     }
     }
   `;
 }

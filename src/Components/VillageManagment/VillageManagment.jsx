@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import './VillageManagment.css'
 import MyButton from "../SharedComponents/MyButton";
 import MyTextInput from "../SharedComponents/MyTextInput";
@@ -24,6 +24,23 @@ const VillageManagment = () => {
 
   const navigate=useNavigate();
   const [userRole,setUserRole]=useState();
+
+  const [page,setPage]=useState(1);
+  const maxCountRef=useRef(0);
+  const limit=10;
+  
+  function nextPage(){
+    const maxPage=Math.ceil(maxCountRef.current/limit);
+    if(page!=maxPage){
+      setPage(page+1);
+    }
+  }
+
+  function prevPage(){
+    if(page!=1){
+      setPage(page-1);
+    }
+  }
 
   useEffect(()=>{
     const token=localStorage.getItem("Token");
@@ -66,12 +83,13 @@ const VillageManagment = () => {
 
   useEffect(() => {
     async function fetchVillages(){
-      let response=await request('http://localhost:3000/graphql', gql.villagesGQL)
-      setVillages(response.villages);
+      let response=await request('http://localhost:3000/graphql', gql.villagesGQL(page,limit))
+      setVillages(response.villages.villages);
+      maxCountRef.current=response.villages.count;
     }
 
     fetchVillages();
-  },[dataChanged])
+  },[dataChanged,page])
 
   function viewFn(id) {
     async function fetchVillageView() {
@@ -155,8 +173,8 @@ const VillageManagment = () => {
 
             <div className="pagination">
               <label className="label">Page:</label>
-              <MyButton value={"Prev"} id={'prev'} />
-              <MyButton value={"Next"} id={'next'} />
+              <MyButton btnFn={prevPage} value={"Prev"} id={'prev'} />
+              <MyButton btnFn={nextPage} value={"Next"} id={'next'} />
             </div>
           </div>
 

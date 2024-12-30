@@ -11,9 +11,10 @@ const Dashboard = () => {
     localStorage.removeItem("userId")
     navigate("/")
   }
-  useEffect((()=>{
+  useEffect(()=>{
     setUsername(localStorage.getItem("username"));
-  }),[])
+  },[])
+
     return (
   <aside>
   <div id="upper-div">

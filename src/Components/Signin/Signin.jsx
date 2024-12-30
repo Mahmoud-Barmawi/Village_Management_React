@@ -29,15 +29,21 @@ export default function Signin() {
 
     let token;
     let userId;
+    let usernameX;
+
     async function fetchSignIn() {
       let response = await request(
         "http://localhost:3000/graphql",
         gql.loginUserGQL(data)
       );
+
+      console.log(response);
+      
       console.log(response.loginUser);
       
       token = response.loginUser.token;
       userId = response.loginUser.userId;
+      usernameX = response.loginUser.userName;
 
       setUsername("");
       setPassword("");
@@ -45,7 +51,7 @@ export default function Signin() {
       if (token!="") {
         localStorage.setItem("Token", token);
         localStorage.setItem("userId", userId);
-        localStorage.setItem("username", response.loginUser.username);
+        localStorage.setItem("username", usernameX);
         navigate("/overView");
       }
     }
