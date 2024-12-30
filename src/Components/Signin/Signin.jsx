@@ -45,6 +45,7 @@ export default function Signin() {
       if (token!="") {
         localStorage.setItem("Token", token);
         localStorage.setItem("userId", userId);
+        localStorage.setItem("username", response.loginUser.username);
         navigate("/overView");
       }
     }

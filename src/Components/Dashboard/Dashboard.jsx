@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Dashboard.css'
 import { Link } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom'
 
 const Dashboard = () => {
+  const navigate=useNavigate();
+  const [username,setUsername]=useState()
+  function logOut(){
+    localStorage.removeItem("Token")
+    localStorage.removeItem("userId")
+    navigate("/")
+  }
+  useEffect((()=>{
+    setUsername(localStorage.getItem("username"));
+  }),[])
     return (
   <aside>
   <div id="upper-div">
@@ -16,8 +27,9 @@ const Dashboard = () => {
   </div>
   <div id="lower-div">
     <div className="avatar" />
-    <h4>Admin Name</h4>
-    <a href="pages/login.html">Logout</a>
+    <h4>{username}</h4>
+    <a onClick={()=>logOut()}>Logout</a>
+
   </div>
 </aside>
 

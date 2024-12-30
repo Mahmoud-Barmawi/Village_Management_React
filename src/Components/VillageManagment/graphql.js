@@ -150,7 +150,7 @@ export function loginUserGQL(data) {
         username: "${data.username}",
         password: "${data.password}"
         ) {
-		token,userId
+		token,userId,username
         }
     }
   `;
