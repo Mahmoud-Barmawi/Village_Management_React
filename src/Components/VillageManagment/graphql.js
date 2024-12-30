@@ -65,6 +65,7 @@ export function viewVillageGQL(id) {
 	}
 	`;
 }
+
 export function updateVillageGQL(id, data) {
   return gql`mutation ExampleQuery{
 		updateVillage(
@@ -82,6 +83,25 @@ export function updateVillageGQL(id, data) {
 	`;
 }
 
+export function getStatGQL() {
+	return gql`
+	query ExampleQuery{
+      getStatistics {
+       totalPopSize,
+       totalNumVillages,
+       totalNumUrban,
+       AgesArray,
+       genderArray,
+       avgLandArea,
+		popArray {
+        populationSize,
+        villageName
+       }
+      }
+    }`
+
+}
+
 export function updateDVillageGQL(id, data) {
   return gql`mutation ExampleQuery{
 		updateVillage(
@@ -97,6 +117,18 @@ export function updateDVillageGQL(id, data) {
 	`;
 }
 
+export function userGQL(id) {
+	return gql`
+  query ExampleQuery {
+    User(
+	id:"${id}"
+	){
+		role
+    }
+  }
+`;
+}
+
 export function addUserGQL(data) {
   return gql`
     mutation ExampleQuery {
@@ -110,3 +142,17 @@ export function addUserGQL(data) {
     }
   `;
 }
+
+export function loginUserGQL(data) {
+	return gql`
+      mutation ExampleQuery{
+      loginUser(
+        username: "${data.username}",
+        password: "${data.password}"
+        ) {
+		token,userId
+        }
+    }
+  `;
+}
+

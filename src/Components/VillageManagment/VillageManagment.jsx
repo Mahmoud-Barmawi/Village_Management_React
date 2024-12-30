@@ -6,6 +6,7 @@ import VillageElement from "./villageElement";
 import { useEffect } from "react";
 import Popup from "./Popup";
 import { request } from 'graphql-request'
+import {useNavigate } from 'react-router-dom'
 
 import * as gql from './graphql.js'
 
@@ -20,6 +21,36 @@ const VillageManagment = () => {
   const [dataChanged,setDataChanged] = useState({});
   const [currentID,setCurrentID] = useState({});
   const [vName,setVName] = useState();
+
+  const navigate=useNavigate();
+  const [userRole,setUserRole]=useState();
+
+  useEffect(()=>{
+    const token=localStorage.getItem("Token");
+    const userId=localStorage.getItem("userId") || null
+    
+    async function fetchUserRole() {
+      try {
+        let response = await request(
+          "http://localhost:3000/graphql",
+          gql.userGQL(userId),
+          null,
+          { token: token }
+        );
+        if(response.User.role=='ADMIN'){
+          setUserRole(true);
+        }else{
+          setUserRole(false);
+        }
+      }catch(error){
+        console.log("error::",error);
+        
+        setUserRole(null);
+        navigate('/');
+      }
+    }
+    fetchUserRole();
+  },[]);
 
   function closePopup(i){
     const showArray=[...showPopup];
@@ -108,7 +139,7 @@ const VillageManagment = () => {
         {showPopup[2] && <Popup type={"form"} title={"Update Village"} formBtnFn={updateVillageFn} fields={updateVillage} btn={"Update Village"} closeFn={()=>closePopup(2)} />}
         {showPopup[3] && <Popup type={"form"} title={"Add Demographic Data for "+vName} formBtnFn={updateDVillageFn} fields={updateDemographicData} btn={"Add Demographic Data"} closeFn={()=>closePopup(3)} />}
 
-        <MyButton value={"Add New Village"} id={'addVillageBtn'} btnFn={()=>openPopup(0)}/>
+        {userRole&&<MyButton value={"Add New Village"} id={'addVillageBtn'} btnFn={()=>openPopup(0)}/>}
         <div className="content">
           <h2>View Village List</h2>
           <MyTextInput type={"text"} id={'searchVillagesIn'} placeholder={'Search Villages...'} />
@@ -134,7 +165,7 @@ const VillageManagment = () => {
             {
               ((villages.length!=0)?villages.map((v)=>{
                 return(
-                  <VillageElement key={v.id} villageName={v.villageName} regionDistrict={v.regionDistrict} admin={true}
+                  <VillageElement key={v.id} villageName={v.villageName} regionDistrict={v.regionDistrict} admin={userRole}
                   id={v.id} viewFn={viewFn} updateFn={updateFn} updateDFn={updateDFn} deleteFn={deleteFn} />
                 )
               }):<div></div>)

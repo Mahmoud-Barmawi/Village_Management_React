@@ -12,11 +12,12 @@ function App() {
       <BrowserRouter>
         <Dashboard />
         <Routes>
-          <Route path="/" element={<Overview />} />
+          {/* <Route path="/" element={<Overview />} /> */}
+          <Route path="/overView" element={<Overview />} />
           <Route path="/villageManagment" element={<VillageManagment />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/gallery" element={<Gallery />} />
-          <Route path="/signIn" element={<Signin />} />
+          <Route path="/" element={<Signin />} />
           <Route path="/signUp" element={<Signup />} />
         </Routes>
       </BrowserRouter>

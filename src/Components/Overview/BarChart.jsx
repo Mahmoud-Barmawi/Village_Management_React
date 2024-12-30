@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { Chart } from "chart.js";
+import { Chart, registerables } from "chart.js";
 
 export default function BarChart({ data }) {
   useEffect(() => {
     const output = [];
     const labels = [];
+		Chart.register(...registerables);
 
     if (data && data.length > 0) {
       for (let i = 0; i < data.length; i++) {

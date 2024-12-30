@@ -3,25 +3,53 @@ import MyButton from "../SharedComponents/MyButton";
 import DynamicText from "../SharedComponents/DynamicText";
 import FormField from "../SharedComponents/FormField";
 import "./Signin.css";
+import * as gql from '../VillageManagment/graphql'
+import { request } from "graphql-request";
+import {useNavigate } from 'react-router-dom'
 
 export default function Signin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate=useNavigate();
+
   const fields = [
     { label: "Username", value: username, setter: setUsername },
     { label: "Password", value: password, setter: setPassword },
   ];
 
   const handleChange = (e, setter) => {
-    console.log("ssss");
     setter(e.target.value);
   };
 
   const handleSubmit = () => {
-    console.log("Username:", username);
-    console.log("Password:", password);
-    setUsername("");
-    setPassword("");
+    const data={
+      username,
+      password
+    }
+
+    let token;
+    let userId;
+    async function fetchSignIn() {
+      let response = await request(
+        "http://localhost:3000/graphql",
+        gql.loginUserGQL(data)
+      );
+      console.log(response.loginUser);
+      
+      token = response.loginUser.token;
+      userId = response.loginUser.userId;
+
+      setUsername("");
+      setPassword("");
+
+      if (token!="") {
+        localStorage.setItem("Token", token);
+        localStorage.setItem("userId", userId);
+        navigate("/overView");
+      }
+    }
+
+    fetchSignIn();
   };
 
   return (

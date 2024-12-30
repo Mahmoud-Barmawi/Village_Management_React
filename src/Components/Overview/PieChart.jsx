@@ -7,15 +7,6 @@ export default function PieChart({ title, xValues, yValues, colors, id }) {
 
 	useEffect(() => {
 		Chart.register(...registerables);
-
-		return () => {
-			if (chartInstanceRef.current) {
-				chartInstanceRef.current.destroy();
-			}
-		};
-	}, []);
-
-	useEffect(() => {
 		if (chartRef.current) {
 			chartInstanceRef.current = new Chart(chartRef.current, {
 				type: 'pie',
@@ -40,6 +31,11 @@ export default function PieChart({ title, xValues, yValues, colors, id }) {
 				},
 			});
 		}
+		return () => {
+			if (chartInstanceRef.current) {
+				chartInstanceRef.current.destroy();
+			}
+		};
 	}, [xValues, yValues, colors, title]);
 
 	return (

@@ -33,13 +33,12 @@ export default function Signup() {
         "http://localhost:3000/graphql",
         gql.addUserGQL(data)
       );
-      setDataChanged(data);
     }
     fetchSignup();
     setFullName("");
     setUsername("");
     setPassword("");
-    navigate('/signin')
+    navigate('/')
 
   };
 
@@ -60,7 +59,7 @@ export default function Signup() {
         <DynamicText
           text="Already have an account?"
           linkText="Login"
-          linkHref="/Login"
+          linkHref="/"
         />
       </div>
     </main>
