@@ -7,7 +7,7 @@ export default function Admins({ admin, openMsgs }) {
       <div id="admin-list">
         {admin && admin.map((ele, index) => {
           return (
-            <div key={index} className="admin" onClick={openMsgs(ele.username)}>
+            <div key={index} className="admin" onClick={()=>openMsgs(ele.username)}>
               <div className="avatar"></div>
               <div className="admin-name">{ele.username}</div>
             </div>

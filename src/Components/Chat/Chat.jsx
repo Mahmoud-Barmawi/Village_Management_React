@@ -4,6 +4,7 @@ import Admins from "./Admins";
 import Message from "./Message";
 import * as gql from '../VillageManagment/graphql'
 import request from "graphql-request";
+import Users from "./Users"
 
 const Chat = () => {
     let isAdmin=[];
@@ -13,6 +14,11 @@ const Chat = () => {
 
     const [message, setMessage] = useState("");
     const [admins,setAdmins]=useState();
+    const [users,setUsers]=useState();
+    const [msgs,setMsgs]=useState([]);
+    const role = localStorage.getItem("role");
+    const username = localStorage.getItem("username");
+    const roomIdRef=useRef(username);
 
     useEffect(() => {
         let token=localStorage.getItem("Token")
@@ -44,38 +50,63 @@ const Chat = () => {
 
     useEffect(() => {
         socketRef.current = new WebSocket('ws://localhost:3000');
+
+        socketRef.current.onopen=()=>{
+            socketRef.current.send(JSON.stringify({ msg: "", roomId: username, type: "start", author: username, isAdmin: (role=="ADMIN") }));
+        }
+
         socketRef.current.onmessage = function (event) {
-            console.log(event);
+            const data = JSON.parse(event.data);
+
+            if (data.type == 'notify') {
+                if(users){
+                    setUsers([...users, data.author])
+                }else{
+                    setUsers([data.author])
+                }
+            }else if(data.type=='msg'){
+                console.log("0000000");
+                console.log(msgs);
+                console.log("0000000");
+                
+                if(msgs.length!=0){
+                    console.log("testIF",data);
+                    setMsgs([...msgs, data])
+                }else{
+                    console.log("testELSE",data);
+                    setMsgs([data])
+                }
+            }
         };
     }, [])
 
 
     function handleSend() {
-        console.log(message);
+        socketRef.current.send(JSON.stringify({ msg:message , roomId: roomIdRef.current, type: "msg", author: username, isAdmin: (role=="ADMIN") }));
         setMessage("");
     };
 
     function openMsgs(admin) {
         //user
+        console.log("hello");
+        
         setShowMsgs(true);
         const username=localStorage.getItem("username");
         const role =localStorage.getItem("role");
 
-        socketRef.current.onopen=()=>{
-            socketRef.current.send(JSON.stringify({ msg: admin, roomId: username, type: "join", author: username,isAdmin:role}));
-        }
+        // socketRef.current.onopen=()=>{
+        socketRef.current.send(JSON.stringify({ msg: admin, roomId: username, type: "join", author: username, isAdmin: (role=="ADMIN") }));
+        console.log("testetestset");
+            
+        // }
     }
 
     function acceptMsg(user){
         //admin
+        console.log(user);
         setShowMsgs(true);
-        socketRef.current = new WebSocket('ws://localhost:3000');
-        const username=localStorage.getItem("username");
-        const role =localStorage.getItem("role");
-
-        socketRef.current.onopen=()=>{
-            socketRef.current.send(JSON.stringify({ msg: "", roomId: user, type: "accept", author: username,isAdmin:role}));
-        }
+        roomIdRef.current=user;
+        socketRef.current.send(JSON.stringify({ msg: "", roomId: user, type: "accept", author: username,isAdmin:(role=="ADMIN")}));
     }
 
     return (
@@ -92,7 +123,7 @@ const Chat = () => {
                    id="search-input"
                  />
 
-                 <Users openMsgs={openMsgs} />
+                 <Users user={users} openMsgs={acceptMsg} />
      
                  {showMsgs && (
                    <div id="chat-container" style={{ display: "flex" }}>
@@ -135,7 +166,13 @@ const Chat = () => {
                   Chat with: <span id="admin-chat-name"></span>
                 </h3>
                 <div id="chat-window">
-                  <Message />
+                    {
+                        (msgs.length!=0)&& msgs.map((e,index)=>{
+                            return (
+                                <Message key={index} msgAuthor={e.author} msgContent={e.msg} />
+                            )
+                        })
+                    }
                 </div>
                 <textarea
                   placeholder="Type your message..."
