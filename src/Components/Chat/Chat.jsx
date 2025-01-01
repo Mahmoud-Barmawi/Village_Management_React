@@ -79,40 +79,79 @@ const Chat = () => {
     }
 
     return (
-        <main>
-            <h1>Chat with Admins</h1>
-            <div className="container">
-                <input
-                    className="input-chat"
-                    type="text"
-                    placeholder="Search for an admin..."
-                    name=""
-                    id="search-input"
-                />
+      <main>
+      {role == "ADMIN" ? (
+               <>
+               <h1>Chat with Users</h1>
+               <div className="container">
+                 <input
+                   className="input-chat"
+                   type="text"
+                   placeholder="Search for an admin..."
+                   name=""
+                   id="search-input"
+                 />
 
-                <Admins admin={admins} openMsgs={openMsgs} />
+                 <Users openMsgs={openMsgs} />
+     
+                 {showMsgs && (
+                   <div id="chat-container" style={{ display: "flex" }}>
+                     <h3>
+                       Chat with: <span id="admin-chat-name"></span>
+                     </h3>
+                     <div id="chat-window">
+                       <Message />
+                     </div>
+                     <textarea
+                       placeholder="Type your message..."
+                       className="input-chat"
+                       value={message}
+                       onChange={(e) => setMessage(e.target.value)}
+                     ></textarea>
+                     <button id="send-btn" onClick={handleSend}>
+                       Send
+                     </button>
+                   </div>
+                 )}
+               </div>
+             </>
+      ) : (
+        <>
+          <h1>Chat with Admins</h1>
+          <div className="container">
+            <input
+              className="input-chat"
+              type="text"
+              placeholder="Search for an admin..."
+              name=""
+              id="search-input"
+            />
 
-                {showMsgs && (
-                    <div id="chat-container" style={{ display: "flex" }}>
-                        <h3>
-                            Chat with: <span id="admin-chat-name"></span>
-                        </h3>
-                        <div id="chat-window">
-                            <Message />
-                        </div>
-                        <textarea
-                            placeholder="Type your message..."
-                            className="input-chat"
-                            value={message}
-                            onChange={(e) => setMessage(e.target.value)}
-                        ></textarea>
-                        <button id="send-btn" onClick={handleSend}>
-                            Send
-                        </button>
-                    </div>
-                )}
-            </div>
-        </main>
+            <Admins admin={admins} openMsgs={openMsgs} />
+
+            {showMsgs && (
+              <div id="chat-container" style={{ display: "flex" }}>
+                <h3>
+                  Chat with: <span id="admin-chat-name"></span>
+                </h3>
+                <div id="chat-window">
+                  <Message />
+                </div>
+                <textarea
+                  placeholder="Type your message..."
+                  className="input-chat"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                ></textarea>
+                <button id="send-btn" onClick={handleSend}>
+                  Send
+                </button>
+              </div>
+            )}
+          </div>
+        </>
+      )}
+    </main>
     );
 };
 
