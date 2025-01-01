@@ -1,0 +1,81 @@
+main h1 {
+  color: #E4E7EB;
+  font-size: 24px;
+}
+#admin-container {
+  background-color: #212936;
+  padding: 20px 20px 30px 20px;
+  border-radius: 7px;
+}
+#admin-container h3 {
+  padding-bottom: 5px;
+}
+#admin-container #admin-list {
+  display: flex;
+  gap: 20px;
+}
+#admin-container #admin-list .admin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+#admin-container #admin-list .admin:hover {
+  border-radius: 10px;
+  text-decoration: underline;
+}
+#chat-container {
+  background: #212936;
+  margin-top: 15px;
+  width: 100%;
+  height: auto;
+  border-radius: 7px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+#chat-container #chat-window {
+  background-color: #212936;
+  margin: 5px 0;
+  border: 1px solid gray;
+  border-radius: 7px;
+  width: 100%;
+  height: 200px;
+  overflow-y: auto;
+}
+#chat-container #chat-window .message {
+  margin: 15px 10px;
+}
+#chat-container #chat-window .message .writer {
+  color: #AAB0BB;
+}
+#chat-container #chat-window .message .content-admin {
+  color: #61A6FC;
+}
+#chat-container #chat-window .message .content-user {
+  color: #35D59A;
+}
+#chat-container button {
+  background-color: #3C82F6;
+  border: 0px;
+  border-radius: 7px;
+  font-family: sans-serif;
+  font-size: 18px;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+}
+#chat-container textarea {
+  height: 100px;
+}
+.input-chat {
+  width: 100%;
+  border-radius: 7px;
+  padding: 15px 10px;
+  margin: 15px 0;
+  font-size: 18px;
+  font-family: sans-serif;
+  border: 0px;
+}

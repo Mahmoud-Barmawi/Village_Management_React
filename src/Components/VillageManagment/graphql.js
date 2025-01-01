@@ -160,3 +160,14 @@ export function loginUserGQL(data) {
   `;
 }
 
+export function uploadImage(desc){
+	return gql`
+	 mutation(${file}: Upload!){
+   		singleUpload(file: $file, desc:"${desc}"){
+    	desc,
+    	url
+    	}
+ 	}
+	`
+}
+

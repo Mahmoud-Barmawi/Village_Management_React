@@ -33,6 +33,8 @@ export default function Popup({
   }
 
   const handleInputChange = (field, value) => {
+    console.log(value);
+    
     if(field==="Gender Ratios" || field==="Age Distribution"){
       value=value.split(',');
     }

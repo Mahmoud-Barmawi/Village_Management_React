@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./Gallery.css";
 import MyButton from "../SharedComponents/MyButton.jsx";
 import Popup from "../VillageManagment/Popup.jsx";
+import request from "graphql-request";
+import * as gql from "../VillageManagment/graphql.js"
 
 const Gallery = () => {
   const [showPopupNewImg, setShowPopupNewImg] = useState(false);
@@ -14,7 +16,20 @@ const Gallery = () => {
     setShowPopupNewImg(true);
   }
   function addNewVillageImg(data){
-    console.log(data)
+    console.log(data["Description about Village"])
+    console.log(data["Upload Image"])
+    console.log("-----------");
+    
+    // async function fetchUploadImage() {
+    //   let response = await request(
+    //     "http://localhost:3000/graphql/",
+    //     const test=gql.uploadImage(data["Description about Village"])
+
+    //     test({variables:{data["Upload Image"]}});
+    //   );
+    //   console.log(response);
+    // }
+    // fetchUploadImage();
   }
   return (
     <>
