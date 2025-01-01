@@ -1,13 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Gallery.css";
 import MyButton from "../SharedComponents/MyButton.jsx";
 import Popup from "../VillageManagment/Popup.jsx";
-import request from "graphql-request";
 import * as gql from "../VillageManagment/graphql.js"
+import request from "graphql-request";
 
 const Gallery = () => {
   const [showPopupNewImg, setShowPopupNewImg] = useState(false);
   const addNewVillageImage = ["Upload Image", "Description about Village"];
+  const [images,setImages]=useState([]);
+  const [addImageFlag,setAddImageFlag]=useState();
+
+  useEffect(() => {
+    async function fetchImages() {
+      let response = await request(
+        "http://localhost:3000/graphql",
+        gql.getImages()
+      );
+      console.log(response.Images);
+      setImages(response.Images);
+    }
+
+    fetchImages();
+  }, [addImageFlag])
+
 
   function closePopup() {
     setShowPopupNewImg(false);
@@ -15,22 +31,39 @@ const Gallery = () => {
   function openPopup() {
     setShowPopupNewImg(true);
   }
-  function addNewVillageImg(data){
-    console.log(data["Description about Village"])
-    console.log(data["Upload Image"])
-    console.log("-----------");
-    
-    // async function fetchUploadImage() {
-    //   let response = await request(
-    //     "http://localhost:3000/graphql/",
-    //     const test=gql.uploadImage(data["Description about Village"])
 
-    //     test({variables:{data["Upload Image"]}});
-    //   );
-    //   console.log(response);
-    // }
-    // fetchUploadImage();
+  function addNewVillageImg(data) {
+    const file = data["Upload Image"];
+    const desc = data["Description about Village"];
+
+    async function fetchUploadImage() {
+      const formData = new FormData();
+
+      formData.append('operations', JSON.stringify({
+        query: gql.uploadImage(desc),
+        variables: {
+          file: null,
+        }
+      }));
+
+      formData.append('map', JSON.stringify({
+        0: ['variables.file']
+      }));
+
+      formData.append('0', file, file.name); 
+
+      const response = await fetch('http://localhost:3000/graphql', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await response.json();
+      console.log(data);
+      setAddImageFlag(data);
+    }
+    fetchUploadImage();
   }
+
   return (
     <>
       <main>
@@ -53,14 +86,17 @@ const Gallery = () => {
 
         <div className="gallery">
 
-        {/* here i will put map */}
-          <div className="gallery-item">
-            <div className="content">
-              <img src="https://via.placeholder.com/150" alt="Village Image" />
-              <p>Description of the village image.</p>
+          {images && images.map((img,index)=>{
+            return(
+            <div key={index} className="gallery-item">
+              <div className="content">
+                <img src={img.url} alt="Village Image" />
+                <p>{img.desc}</p>
+              </div>
             </div>
-          </div>
-        {/*  */}
+            )
+          })}
+
         </div>
       </main>
     </>

@@ -33,12 +33,18 @@ export default function Popup({
   }
 
   const handleInputChange = (field, value) => {
-    console.log(value);
     
     if(field==="Gender Ratios" || field==="Age Distribution"){
       value=value.split(',');
     }
-    setFormData({ ...formData, [field]: value });
+
+    if(value.files){
+      setFormData({ ...formData, [field]: value.files[0] });
+    }else if(value.value){
+      setFormData({ ...formData, [field]: value.value });
+    }else{
+      setFormData({ ...formData, [field]: value });
+    }
   };
 
   return (
@@ -76,7 +82,7 @@ export default function Popup({
               parentClass={"villageDetails"}
               label={field}
               placeholder={`Enter your ${field.toLowerCase()}`}
-              onChange={(e) => handleInputChange(field, e.target.value)}
+              onChange={(e) => handleInputChange(field, e.target)}
               className={"btns"}
             />
           ))}

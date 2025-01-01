@@ -162,11 +162,21 @@ export function loginUserGQL(data) {
 
 export function uploadImage(desc){
 	return gql`
-	 mutation(${file}: Upload!){
+    mutation($file: Upload!) {
    		singleUpload(file: $file, desc:"${desc}"){
-    	desc,
+		desc,
     	url
     	}
+ 	}
+	`
+}
+
+export function getImages(){
+	return gql`
+	query{
+   		Images {
+     		desc,url
+   		}
  	}
 	`
 }
