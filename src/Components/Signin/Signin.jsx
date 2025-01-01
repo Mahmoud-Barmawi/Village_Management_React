@@ -30,10 +30,11 @@ export default function Signin() {
     let token;
     let userId;
     let usernameX;
+    let role;
 
     async function fetchSignIn() {
       let response = await request(
-        "https://village-demo.onrender.com/graphql",
+        "http://localhost:3000/graphql",
         gql.loginUserGQL(data)
       );
 
@@ -44,6 +45,7 @@ export default function Signin() {
       token = response.loginUser.token;
       userId = response.loginUser.userId;
       usernameX = response.loginUser.userName;
+      role=response.loginUser.role
 
       setUsername("");
       setPassword("");
@@ -52,6 +54,7 @@ export default function Signin() {
         localStorage.setItem("Token", token);
         localStorage.setItem("userId", userId);
         localStorage.setItem("username", usernameX);
+        localStorage.setItem("role", role);
         navigate("/overView");
       }
     }

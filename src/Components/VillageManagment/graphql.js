@@ -131,6 +131,17 @@ export function userGQL(id) {
 `;
 }
 
+export function getUsersGQL() {
+	return gql`
+	query{
+ 	Users {
+    	username,
+    	role
+  	}
+	}
+`;
+}
+
 export function addUserGQL(data) {
   return gql`
     mutation ExampleQuery {
@@ -154,7 +165,8 @@ export function loginUserGQL(data) {
         ) {
 		token,
 		userId,
-		userName
+		userName,
+		role
      }
     }
   `;

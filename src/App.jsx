@@ -11,16 +11,16 @@ function App() {
     <>
       <BrowserRouter>
         <Dashboard />
-        {/* <Routes>
+        <Routes>
           <Route path="/overView" element={<Overview />} />
           <Route path="/villageManagment" element={<VillageManagment />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/" element={<Signin />} />
           <Route path="/signUp" element={<Signup />} />
-        </Routes> */}
+        </Routes>
       </BrowserRouter>
-      <Chat/>
+      {/* <Chat/> */}
       {/* <Gallery/> */}
       {/* <Signin/> */}
       {/* <Signup/> */}
