@@ -3,14 +3,14 @@ import MyButton from "../SharedComponents/MyButton";
 import DynamicText from "../SharedComponents/DynamicText";
 import FormField from "../SharedComponents/FormField";
 import "./Signin.css";
-import * as gql from '../VillageManagment/graphql'
+import * as gql from "../VillageManagment/graphql";
 import { request } from "graphql-request";
-import {useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 export default function Signin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const fields = [
     { label: "Username", value: username, setter: setUsername },
@@ -22,10 +22,10 @@ export default function Signin() {
   };
 
   const handleSubmit = () => {
-    const data={
+    const data = {
       username,
-      password
-    }
+      password,
+    };
 
     let token;
     let userId;
@@ -33,14 +33,14 @@ export default function Signin() {
 
     async function fetchSignIn() {
       let response = await request(
-        "http://localhost:3000/graphql",
+        "https://village-demo.onrender.com/graphql",
         gql.loginUserGQL(data)
       );
 
       console.log(response);
-      
+
       console.log(response.loginUser);
-      
+
       token = response.loginUser.token;
       userId = response.loginUser.userId;
       usernameX = response.loginUser.userName;
@@ -48,7 +48,7 @@ export default function Signin() {
       setUsername("");
       setPassword("");
 
-      if (token!="") {
+      if (token != "") {
         localStorage.setItem("Token", token);
         localStorage.setItem("userId", userId);
         localStorage.setItem("username", usernameX);

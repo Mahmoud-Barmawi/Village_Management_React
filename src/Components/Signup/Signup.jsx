@@ -5,10 +5,10 @@ import FormField from "../SharedComponents/FormField";
 import "./Signup.css";
 import { request } from "graphql-request";
 import * as gql from "../VillageManagment/graphql.js";
-import {useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
-  const navigate = useNavigate() 
+  const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -30,7 +30,7 @@ export default function Signup() {
     };
     async function fetchSignup() {
       let response = await request(
-        "http://localhost:3000/graphql",
+        "https://village-demo.onrender.com/graphql",
         gql.addUserGQL(data)
       );
     }
@@ -38,8 +38,7 @@ export default function Signup() {
     setFullName("");
     setUsername("");
     setPassword("");
-    navigate('/')
-
+    navigate("/");
   };
 
   return (

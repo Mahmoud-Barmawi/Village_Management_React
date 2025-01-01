@@ -1,99 +1,125 @@
 import React, { useRef, useState } from "react";
-import './VillageManagment.css'
+import "./VillageManagment.css";
 import MyButton from "../SharedComponents/MyButton";
 import MyTextInput from "../SharedComponents/MyTextInput";
 import VillageElement from "./villageElement";
 import { useEffect } from "react";
 import Popup from "./Popup";
-import { request } from 'graphql-request'
-import {useNavigate } from 'react-router-dom'
+import { request } from "graphql-request";
+import { useNavigate } from "react-router-dom";
 
-import * as gql from './graphql.js'
+import * as gql from "./graphql.js";
 
 const VillageManagment = () => {
-  const addNewVillage=["Village Name","Region/District","Land Area (sq km)","Latitude","Longitude","Upload Image","Categories/Tags"]
-  const updateVillage=["Village Name","Region/District","Land Area (sq km)","Latitude","Longitude","Upload Image"]
-  const updateDemographicData=["Population Size","Age Distribution","Gender Ratios","Population Growth Rate"]
+  const addNewVillage = [
+    "Village Name",
+    "Region/District",
+    "Land Area (sq km)",
+    "Latitude",
+    "Longitude",
+    "Upload Image",
+    "Categories/Tags",
+  ];
+  const updateVillage = [
+    "Village Name",
+    "Region/District",
+    "Land Area (sq km)",
+    "Latitude",
+    "Longitude",
+    "Upload Image",
+  ];
+  const updateDemographicData = [
+    "Population Size",
+    "Age Distribution",
+    "Gender Ratios",
+    "Population Growth Rate",
+  ];
 
-  const [showPopup,setShowPopup]=useState([false,false,false,false]);
-  const [villages,setVillages] = useState([]);
+  const [showPopup, setShowPopup] = useState([false, false, false, false]);
+  const [villages, setVillages] = useState([]);
   const [villageView, setVillageView] = useState({ id: 2 });
-  const [dataChanged,setDataChanged] = useState({});
-  const [currentID,setCurrentID] = useState({});
-  const [vName,setVName] = useState();
+  const [dataChanged, setDataChanged] = useState({});
+  const [currentID, setCurrentID] = useState({});
+  const [vName, setVName] = useState();
 
-  const navigate=useNavigate();
-  const [userRole,setUserRole]=useState();
+  const navigate = useNavigate();
+  const [userRole, setUserRole] = useState();
 
-  const [page,setPage]=useState(1);
-  const maxCountRef=useRef(0);
-  const limit=10;
-  
-  function nextPage(){
-    const maxPage=Math.ceil(maxCountRef.current/limit);
-    if(page!=maxPage){
-      setPage(page+1);
+  const [page, setPage] = useState(1);
+  const maxCountRef = useRef(0);
+  const limit = 10;
+
+  function nextPage() {
+    const maxPage = Math.ceil(maxCountRef.current / limit);
+    if (page != maxPage) {
+      setPage(page + 1);
     }
   }
 
-  function prevPage(){
-    if(page!=1){
-      setPage(page-1);
+  function prevPage() {
+    if (page != 1) {
+      setPage(page - 1);
     }
   }
 
-  useEffect(()=>{
-    const token=localStorage.getItem("Token");
-    const userId=localStorage.getItem("userId") || null
-    
+  useEffect(() => {
+    const token = localStorage.getItem("Token");
+    const userId = localStorage.getItem("userId") || null;
+
     async function fetchUserRole() {
       try {
         let response = await request(
-          "http://localhost:3000/graphql",
+          "https://village-demo.onrender.com/graphql",
           gql.userGQL(userId),
           null,
           { token: token }
         );
-        if(response.User.role=='ADMIN'){
+        if (response.User.role == "ADMIN") {
           setUserRole(true);
-        }else{
+        } else {
           setUserRole(false);
         }
-      }catch(error){
-        console.log("error::",error);
-        
+      } catch (error) {
+        console.log("error::", error);
+
         setUserRole(null);
-        navigate('/');
+        navigate("/");
       }
     }
     fetchUserRole();
-  },[]);
+  }, []);
 
-  function closePopup(i){
-    const showArray=[...showPopup];
-    showArray[i]=false;
+  function closePopup(i) {
+    const showArray = [...showPopup];
+    showArray[i] = false;
     setShowPopup(showArray);
   }
 
-  function openPopup(i){
-    const showArray=[...showPopup];
-    showArray[i]=true;
+  function openPopup(i) {
+    const showArray = [...showPopup];
+    showArray[i] = true;
     setShowPopup(showArray);
   }
 
   useEffect(() => {
-    async function fetchVillages(){
-      let response=await request('http://localhost:3000/graphql', gql.villagesGQL(page,limit))
+    async function fetchVillages() {
+      let response = await request(
+        "https://village-demo.onrender.com/graphql",
+        gql.villagesGQL(page, limit)
+      );
       setVillages(response.villages.villages);
-      maxCountRef.current=response.villages.count;
+      maxCountRef.current = response.villages.count;
     }
 
     fetchVillages();
-  },[dataChanged,page])
+  }, [dataChanged, page]);
 
   function viewFn(id) {
     async function fetchVillageView() {
-      let response = await request('http://localhost:3000/graphql', gql.viewVillageGQL(id));
+      let response = await request(
+        "https://village-demo.onrender.com/graphql",
+        gql.viewVillageGQL(id)
+      );
       console.log(response.village);
       setVillageView(response.village);
       openPopup(1);
@@ -101,14 +127,17 @@ const VillageManagment = () => {
     fetchVillageView();
   }
 
-  function updateFn(id){
+  function updateFn(id) {
     setCurrentID(id);
     openPopup(2);
   }
 
-  function updateDFn(id){
+  function updateDFn(id) {
     async function fetchVillageName() {
-      let response = await request('http://localhost:3000/graphql', gql.villageNameGQL(id));
+      let response = await request(
+        "https://village-demo.onrender.com/graphql",
+        gql.villageNameGQL(id)
+      );
       setCurrentID(id);
       setDataChanged(response);
       setVName(response.village.villageName);
@@ -117,9 +146,12 @@ const VillageManagment = () => {
     fetchVillageName();
     openPopup(3);
   }
-  function deleteFn(id){
+  function deleteFn(id) {
     async function fetchDeleteVillage() {
-      let response = await request('http://localhost:3000/graphql', gql.deleteVillageGQL(id));
+      let response = await request(
+        "https://village-demo.onrender.com/graphql",
+        gql.deleteVillageGQL(id)
+      );
       setDataChanged(response);
     }
     fetchDeleteVillage();
@@ -127,7 +159,10 @@ const VillageManagment = () => {
 
   function addVillage(data) {
     async function fetchAddVilage() {
-      let response = await request('http://localhost:3000/graphql', gql.addVillageGQL(data));
+      let response = await request(
+        "https://village-demo.onrender.com/graphql",
+        gql.addVillageGQL(data)
+      );
       setDataChanged(data);
     }
     fetchAddVilage();
@@ -135,7 +170,10 @@ const VillageManagment = () => {
 
   function updateVillageFn(data) {
     async function fetchUpdateVilage() {
-      let response = await request('http://localhost:3000/graphql', gql.updateVillageGQL(currentID, data));
+      let response = await request(
+        "https://village-demo.onrender.com/graphql",
+        gql.updateVillageGQL(currentID, data)
+      );
       setDataChanged(data);
     }
     fetchUpdateVilage();
@@ -143,7 +181,10 @@ const VillageManagment = () => {
 
   function updateDVillageFn(data) {
     async function fetchUpdateVilage() {
-      let response = await request('http://localhost:3000/graphql', gql.updateDVillageGQL(currentID, data));
+      let response = await request(
+        "https://village-demo.onrender.com/graphql",
+        gql.updateDVillageGQL(currentID, data)
+      );
       setDataChanged(data);
     }
     fetchUpdateVilage();
@@ -152,17 +193,61 @@ const VillageManagment = () => {
   return (
     <>
       <main>
-        {showPopup[0] && <Popup type={"form"} title={"Add New Village"} formBtnFn={addVillage} fields={addNewVillage} btn={"Add Village"} closeFn={()=>closePopup(0)} />}      
-        {showPopup[1] && <Popup type={"view"} title={"Village Details"} villageView={villageView} fields={addNewVillage} closeFn={()=>closePopup(1)} />}
-        {showPopup[2] && <Popup type={"form"} title={"Update Village"} formBtnFn={updateVillageFn} fields={updateVillage} btn={"Update Village"} closeFn={()=>closePopup(2)} />}
-        {showPopup[3] && <Popup type={"form"} title={"Add Demographic Data for "+vName} formBtnFn={updateDVillageFn} fields={updateDemographicData} btn={"Add Demographic Data"} closeFn={()=>closePopup(3)} />}
+        {showPopup[0] && (
+          <Popup
+            type={"form"}
+            title={"Add New Village"}
+            formBtnFn={addVillage}
+            fields={addNewVillage}
+            btn={"Add Village"}
+            closeFn={() => closePopup(0)}
+          />
+        )}
+        {showPopup[1] && (
+          <Popup
+            type={"view"}
+            title={"Village Details"}
+            villageView={villageView}
+            fields={addNewVillage}
+            closeFn={() => closePopup(1)}
+          />
+        )}
+        {showPopup[2] && (
+          <Popup
+            type={"form"}
+            title={"Update Village"}
+            formBtnFn={updateVillageFn}
+            fields={updateVillage}
+            btn={"Update Village"}
+            closeFn={() => closePopup(2)}
+          />
+        )}
+        {showPopup[3] && (
+          <Popup
+            type={"form"}
+            title={"Add Demographic Data for " + vName}
+            formBtnFn={updateDVillageFn}
+            fields={updateDemographicData}
+            btn={"Add Demographic Data"}
+            closeFn={() => closePopup(3)}
+          />
+        )}
 
-        {userRole&&<MyButton value={"Add New Village"} id={'addVillageBtn'} btnFn={()=>openPopup(0)}/>}
+        {userRole && (
+          <MyButton
+            value={"Add New Village"}
+            id={"addVillageBtn"}
+            btnFn={() => openPopup(0)}
+          />
+        )}
         <div className="content">
           <h2>View Village List</h2>
-          <MyTextInput type={"text"} id={'searchVillagesIn'} placeholder={'Search Villages...'} />
+          <MyTextInput
+            type={"text"}
+            id={"searchVillagesIn"}
+            placeholder={"Search Villages..."}
+          />
           <div className="orderAndPagination">
-
             <div className="select-box">
               <label className="label">Sort by:</label>
               <select id="village-sort">
@@ -173,23 +258,33 @@ const VillageManagment = () => {
 
             <div className="pagination">
               <label className="label">Page:</label>
-              <MyButton btnFn={prevPage} value={"Prev"} id={'prev'} />
-              <MyButton btnFn={nextPage} value={"Next"} id={'next'} />
+              <MyButton btnFn={prevPage} value={"Prev"} id={"prev"} />
+              <MyButton btnFn={nextPage} value={"Next"} id={"next"} />
             </div>
           </div>
 
           <div id="villages">
             {/* <VillageElement villageName={'jalal'} regionDistrict={"abo mouse"} admin={false} /> */}
-            {
-              ((villages.length!=0)?villages.map((v)=>{
-                return(
-                  <VillageElement key={v.id} villageName={v.villageName} regionDistrict={v.regionDistrict} admin={userRole}
-                  id={v.id} viewFn={viewFn} updateFn={updateFn} updateDFn={updateDFn} deleteFn={deleteFn} />
-                )
-              }):<div></div>)
-            }
+            {villages.length != 0 ? (
+              villages.map((v) => {
+                return (
+                  <VillageElement
+                    key={v.id}
+                    villageName={v.villageName}
+                    regionDistrict={v.regionDistrict}
+                    admin={userRole}
+                    id={v.id}
+                    viewFn={viewFn}
+                    updateFn={updateFn}
+                    updateDFn={updateDFn}
+                    deleteFn={deleteFn}
+                  />
+                );
+              })
+            ) : (
+              <div></div>
+            )}
           </div>
-
         </div>
       </main>
     </>
