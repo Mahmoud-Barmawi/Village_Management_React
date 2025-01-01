@@ -9,6 +9,8 @@ const Dashboard = () => {
   function logOut(){
     localStorage.removeItem("Token")
     localStorage.removeItem("userId")
+    localStorage.removeItem("role")
+    localStorage.removeItem("username")
     navigate("/")
   }
   useEffect(()=>{

@@ -65,17 +65,16 @@ const Chat = () => {
                     setUsers([data.author])
                 }
             }else if(data.type=='msg'){
-                console.log("0000000");
-                console.log(msgs);
-                console.log("0000000");
+                console.log(data.msg);
                 
-                if(msgs.length!=0){
-                    console.log("testIF",data);
-                    setMsgs([...msgs, data])
-                }else{
-                    console.log("testELSE",data);
-                    setMsgs([data])
-                }
+                setMsgs((prevMsgs) => [...prevMsgs, data]);
+                // if(msgs.length!=0){
+                //     console.log("testIF",data);
+                //     setMsgs([...msgs, data])
+                // }else{
+                //     console.log("testELSE",data);
+                //     setMsgs([data])
+                // }
             }
         };
     }, [])
@@ -131,7 +130,13 @@ const Chat = () => {
                        Chat with: <span id="admin-chat-name"></span>
                      </h3>
                      <div id="chat-window">
-                       <Message />
+                         {
+                            (msgs.length!=0)&& msgs.map((e,index)=>{
+                                return (
+                                    <Message key={index} msgAuthor={e.author} msgContent={e.msg} color="content-admin" />
+                                )
+                        })
+                    }
                      </div>
                      <textarea
                        placeholder="Type your message..."
@@ -169,7 +174,7 @@ const Chat = () => {
                     {
                         (msgs.length!=0)&& msgs.map((e,index)=>{
                             return (
-                                <Message key={index} msgAuthor={e.author} msgContent={e.msg} />
+                                <Message key={index} msgAuthor={e.author} msgContent={e.msg} color="content-user" />
                             )
                         })
                     }
