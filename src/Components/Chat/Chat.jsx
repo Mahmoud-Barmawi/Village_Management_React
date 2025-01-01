@@ -44,7 +44,7 @@ const Chat = () => {
 
     useEffect(() => {
         socketRef.current = new WebSocket('ws://localhost:3000');
-        socket.onmessage = function (event) {
+        socketRef.current.onmessage = function (event) {
             console.log(event);
         };
     }, [])
