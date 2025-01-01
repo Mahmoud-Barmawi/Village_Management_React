@@ -20,8 +20,8 @@ function App() {
           <Route path="/signUp" element={<Signup />} />
         </Routes> */}
       </BrowserRouter>
-      {/* <Chat/> */}
-      <Gallery/>
+      <Chat/>
+      {/* <Gallery/> */}
       {/* <Signin/> */}
       {/* <Signup/> */}
     </>
