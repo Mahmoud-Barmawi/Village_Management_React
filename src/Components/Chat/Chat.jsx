@@ -41,22 +41,19 @@ const Chat = () => {
         fetchAdmins();
     }, []);
 
-    useEffect(()=>{
-        console.log("admins---");
-        console.log(admins);
-        console.log("admins---");
-    },[admins])
 
-    useEffect(()=>{
+    useEffect(() => {
         socketRef.current = new WebSocket('ws://localhost:3000');
-    },[])
+        socket.onmessage = function (event) {
+            console.log(event);
+        };
+    }, [])
 
 
     function handleSend() {
         console.log(message);
         setMessage("");
     };
-
 
     function openMsgs(admin) {
         //user
@@ -65,9 +62,8 @@ const Chat = () => {
         const role =localStorage.getItem("role");
 
         socketRef.current.onopen=()=>{
-            socketRef.current.send(JSON.stringify({ msg: "", roomId: username, type: "join", author: username,isAdmin:role}));
+            socketRef.current.send(JSON.stringify({ msg: admin, roomId: username, type: "join", author: username,isAdmin:role}));
         }
-
     }
 
     function acceptMsg(user){
