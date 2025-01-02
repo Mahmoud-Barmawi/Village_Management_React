@@ -174,7 +174,9 @@ const VillageManagment = () => {
 
   function addVillage(data) {
     console.log(data);
-    const file =data.file;
+    const file =data["Upload Image"];
+    console.log("----",file);
+    
 
     async function fetchAddVilage() {
       const formData = new FormData();
@@ -197,9 +199,9 @@ const VillageManagment = () => {
         body: formData
       });
 
-      const data = await response.json();
-      console.log(data);
-      setDataChanged(data);
+      const output = await response.json();
+      console.log(output);
+      setDataChanged(output);
 
       // let response = await request(
       //   "http://localhost:3000/graphql",

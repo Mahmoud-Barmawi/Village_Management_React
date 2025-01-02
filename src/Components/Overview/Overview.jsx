@@ -89,14 +89,14 @@ const Overview = () => {
           />
 
           <PieChart
-            title={"test1"}
+            title={"Age Distribution"}
             colors={["#2F71A3", "#A74C65"]}
             xValues={["Male", "Female"]}
             yValues={stat ? stat.genderArray : []}
             id={"pie-chart-1"}
           />
           <PieChart
-            title={"test1"}
+            title={"Gender Ratios"}
             colors={["#A74C65", "#2F71A3", "#A58C4D", "#3C8489", "#684EAF"]}
             xValues={["0-18", "19-35", "36-50", "51-65", "65+"]}
             yValues={stat ? stat.AgesArray : []}

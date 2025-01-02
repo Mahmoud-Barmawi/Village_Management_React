@@ -4,12 +4,16 @@ import MyButton from "../SharedComponents/MyButton.jsx";
 import Popup from "../VillageManagment/Popup.jsx";
 import * as gql from "../VillageManagment/graphql.js"
 import request from "graphql-request";
+import { useNavigate } from "react-router-dom";
 
 const Gallery = () => {
   const [showPopupNewImg, setShowPopupNewImg] = useState(false);
   const addNewVillageImage = ["Upload Image", "Description about Village"];
   const [images,setImages]=useState([]);
   const [addImageFlag,setAddImageFlag]=useState();
+
+  const navigate = useNavigate();
+  const [userRole, setUserRole] = useState();
 
   useEffect(() => {
     async function fetchImages() {
@@ -23,6 +27,33 @@ const Gallery = () => {
 
     fetchImages();
   }, [addImageFlag])
+
+    useEffect(() => {
+    const token = localStorage.getItem("Token");
+    const userId = localStorage.getItem("userId") || null;
+
+    async function fetchUserRole() {
+      try {
+        let response = await request(
+          "http://localhost:3000/graphql",
+          gql.userGQL(userId),
+          null,
+          { token: token }
+        );
+        if (response.User.role == "ADMIN") {
+          setUserRole(true);
+        } else {
+          setUserRole(false);
+        }
+      } catch (error) {
+        console.log("error::", error);
+
+        setUserRole(null);
+        navigate("/");
+      }
+    }
+    fetchUserRole();
+  }, []);
 
 
   function closePopup() {

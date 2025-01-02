@@ -28,6 +28,7 @@ export default function Popup({
 
   function getCorrectText(field) {
     const key = map[field];
+    console.log(villageView[key]);
     return villageView[key];
   }
 
@@ -58,14 +59,16 @@ export default function Popup({
           <div id="content">
             {fields.map((ele, index) => {
               return (
+              (ele!='Upload Image')?(
                 <p key={index}>
                   <span className="view-title">{ele}: </span>
                   <span id="view-name">{getCorrectText(ele)}</span>
                 </p>
+              ):<div key={index}></div>
               );
             })}
           </div>
-          <img src={fields.getCorrectText("Upload Image")} alt="village-img" />
+          <img src={getCorrectText("Upload Image")} alt="village-img" />
         </div>
       ) : (
         <div className="stylePopups">
