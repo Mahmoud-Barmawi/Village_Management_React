@@ -10,9 +10,9 @@ export function villageNameGQL(id) {
 	`;
 }
 
-export const villagesGQL =(page,limit)=> gql`
+export const villagesGQL =(page,limit,sort,search)=> gql`
   query ExampleQuery {
-    villages(page:${page},limit:${limit}){
+    villages(page:${page},limit:${limit},sort:${sort},search:"${search}"){
 	villages{
       id
       villageName
@@ -97,11 +97,12 @@ export function getStatGQL() {
        avgLandArea,
 		popArray {
         populationSize,
-        villageName
+        villageName,
+		latitude,
+		longitude
        }
       }
     }`
-
 }
 
 export function updateDVillageGQL(id, data) {

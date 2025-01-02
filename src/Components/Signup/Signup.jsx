@@ -30,7 +30,7 @@ export default function Signup() {
     };
     async function fetchSignup() {
       let response = await request(
-        "https://village-demo.onrender.com/graphql",
+        "http://localhost:3000/graphql",
         gql.addUserGQL(data)
       );
     }

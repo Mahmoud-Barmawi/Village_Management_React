@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 const Overview = () => {
   const navigate = useNavigate();
   const [stat, setStat] = useState(null);
+  const [locations,setLocations] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("Token");
@@ -19,7 +20,7 @@ const Overview = () => {
     async function fetchUserRole() {
       try {
         let response = await request(
-          "https://village-demo.onrender.com/graphql",
+          "http://localhost:3000/graphql",
           gql.userGQL(userId),
           null,
           { token: token }
@@ -34,7 +35,7 @@ const Overview = () => {
     async function fetchStat() {
       try {
         let response = await request(
-          "https://village-demo.onrender.com/graphql",
+          "http://localhost:3000/graphql",
           gql.getStatGQL(),
           null,
           { token: token }
@@ -42,6 +43,13 @@ const Overview = () => {
 
         console.log(response);
         setStat(response.getStatistics);
+
+        const tempLocations=[]
+        response.getStatistics.popArray.forEach((e)=>{
+          tempLocations.push({longitude:e.longitude,latitude:e.latitude});
+        })
+        
+        setLocations(tempLocations);
       } catch (error) {
         console.log("error::", error);
 
@@ -58,7 +66,7 @@ const Overview = () => {
       <main>
         <h1>Overview</h1>
         <div className="grid-div">
-          <Map />
+          <Map locations={locations} />
           <InfoCard
             content={"Total Number of Villages "}
             value={stat ? stat.totalNumVillages : "--"}

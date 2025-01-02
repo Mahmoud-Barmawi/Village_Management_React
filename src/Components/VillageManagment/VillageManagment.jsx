@@ -46,6 +46,8 @@ const VillageManagment = () => {
   const [userRole, setUserRole] = useState();
 
   const [page, setPage] = useState(1);
+  const [isSort, setIsSort] = useState(false);
+  const [search, setSearch] = useState("");
   const maxCountRef = useRef(0);
   const limit = 10;
 
@@ -69,7 +71,7 @@ const VillageManagment = () => {
     async function fetchUserRole() {
       try {
         let response = await request(
-          "https://village-demo.onrender.com/graphql",
+          "http://localhost:3000/graphql",
           gql.userGQL(userId),
           null,
           { token: token }
@@ -89,6 +91,19 @@ const VillageManagment = () => {
     fetchUserRole();
   }, []);
 
+  function handleSelect(event){
+    const value=event.target.value;
+    if(value=='alphabetical'){
+      setIsSort(true);
+    }else{
+      setIsSort(false);
+    }
+  }
+
+  function handleSearch(event){
+    const value=event.target.value;
+    setSearch(value)
+  }
   function closePopup(i) {
     const showArray = [...showPopup];
     showArray[i] = false;
@@ -104,20 +119,20 @@ const VillageManagment = () => {
   useEffect(() => {
     async function fetchVillages() {
       let response = await request(
-        "https://village-demo.onrender.com/graphql",
-        gql.villagesGQL(page, limit)
+        "http://localhost:3000/graphql",
+        gql.villagesGQL(page, limit,isSort,search)
       );
       setVillages(response.villages.villages);
       maxCountRef.current = response.villages.count;
     }
 
     fetchVillages();
-  }, [dataChanged, page]);
+  }, [dataChanged, page,search,isSort]);
 
   function viewFn(id) {
     async function fetchVillageView() {
       let response = await request(
-        "https://village-demo.onrender.com/graphql",
+        "http://localhost:3000/graphql",
         gql.viewVillageGQL(id)
       );
       console.log(response.village);
@@ -135,7 +150,7 @@ const VillageManagment = () => {
   function updateDFn(id) {
     async function fetchVillageName() {
       let response = await request(
-        "https://village-demo.onrender.com/graphql",
+        "http://localhost:3000/graphql",
         gql.villageNameGQL(id)
       );
       setCurrentID(id);
@@ -149,7 +164,7 @@ const VillageManagment = () => {
   function deleteFn(id) {
     async function fetchDeleteVillage() {
       let response = await request(
-        "https://village-demo.onrender.com/graphql",
+        "http://localhost:3000/graphql",
         gql.deleteVillageGQL(id)
       );
       setDataChanged(response);
@@ -160,7 +175,7 @@ const VillageManagment = () => {
   function addVillage(data) {
     async function fetchAddVilage() {
       let response = await request(
-        "https://village-demo.onrender.com/graphql",
+        "http://localhost:3000/graphql",
         gql.addVillageGQL(data)
       );
       setDataChanged(data);
@@ -171,7 +186,7 @@ const VillageManagment = () => {
   function updateVillageFn(data) {
     async function fetchUpdateVilage() {
       let response = await request(
-        "https://village-demo.onrender.com/graphql",
+        "http://localhost:3000/graphql",
         gql.updateVillageGQL(currentID, data)
       );
       setDataChanged(data);
@@ -182,7 +197,7 @@ const VillageManagment = () => {
   function updateDVillageFn(data) {
     async function fetchUpdateVilage() {
       let response = await request(
-        "https://village-demo.onrender.com/graphql",
+        "http://localhost:3000/graphql",
         gql.updateDVillageGQL(currentID, data)
       );
       setDataChanged(data);
@@ -243,6 +258,7 @@ const VillageManagment = () => {
         <div className="content">
           <h2>View Village List</h2>
           <MyTextInput
+            onChange={handleSearch}
             type={"text"}
             id={"searchVillagesIn"}
             placeholder={"Search Villages..."}
@@ -250,10 +266,12 @@ const VillageManagment = () => {
           <div className="orderAndPagination">
             <div className="select-box">
               <label className="label">Sort by:</label>
-              <select id="village-sort">
+
+              <select id="village-sort" onChange={handleSelect}>
                 <option value="default">Default</option>
                 <option value="alphabetical">Alphabetical</option>
               </select>
+
             </div>
 
             <div className="pagination">
