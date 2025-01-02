@@ -13,6 +13,7 @@ const Chat = () => {
     const socketRef=useRef(null);
 
     const [message, setMessage] = useState("");
+    const [filterAdmins,setFilterAdmins]=useState();
     const [admins,setAdmins]=useState();
     const [users,setUsers]=useState();
     const [msgs,setMsgs]=useState([]);
@@ -40,6 +41,7 @@ const Chat = () => {
                     }
                 });
                 setAdmins(isAdmin);
+                setFilterAdmins(isAdmin);
             } catch (error) {
                 console.log("error::", error);
             }
@@ -108,19 +110,29 @@ const Chat = () => {
         socketRef.current.send(JSON.stringify({ msg: "", roomId: user, type: "accept", author: username,isAdmin:(role=="ADMIN")}));
     }
 
+    function handleSearchAdmin(event){
+      const value=event.target.value.toLowerCase();
+      if(value==''){setFilterAdmins(admins); return}
+
+      const filterAdmins=admins.filter((admin)=>{
+        return admin.username.toLowerCase().includes(value);
+      })
+      setFilterAdmins(filterAdmins)
+    }
+
     return (
       <main>
       {role == "ADMIN" ? (
                <>
                <h1>Chat with Users</h1>
                <div className="container">
-                 <input
+                 {/* <input
                    className="input-chat"
                    type="text"
                    placeholder="Search for an admin..."
                    name=""
                    id="search-input"
-                 />
+                 /> */}
 
                  <Users user={users} openMsgs={acceptMsg} />
      
@@ -160,10 +172,11 @@ const Chat = () => {
               type="text"
               placeholder="Search for an admin..."
               name=""
+              onChange={handleSearchAdmin}
               id="search-input"
             />
 
-            <Admins admin={admins} openMsgs={openMsgs} />
+            <Admins admin={filterAdmins} openMsgs={openMsgs} />
 
             {showMsgs && (
               <div id="chat-container" style={{ display: "flex" }}>
