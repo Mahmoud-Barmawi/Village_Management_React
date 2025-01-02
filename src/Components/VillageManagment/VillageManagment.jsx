@@ -173,12 +173,38 @@ const VillageManagment = () => {
   }
 
   function addVillage(data) {
+    console.log(data);
+    const file =data.file;
+
     async function fetchAddVilage() {
-      let response = await request(
-        "http://localhost:3000/graphql",
-        gql.addVillageGQL(data)
-      );
+      const formData = new FormData();
+
+      formData.append('operations', JSON.stringify({
+        query: gql.addVillageGQL(data),
+        variables: {
+          file: null,
+        }
+      }));
+
+      formData.append('map', JSON.stringify({
+        0: ['variables.file']
+      }));
+
+      formData.append('0', file, file.name);
+
+      const response = await fetch('http://localhost:3000/graphql', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await response.json();
+      console.log(data);
       setDataChanged(data);
+
+      // let response = await request(
+      //   "http://localhost:3000/graphql",
+      //   gql.addVillageGQL(data)
+      // );
     }
     fetchAddVilage();
   }

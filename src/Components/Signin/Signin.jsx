@@ -7,7 +7,7 @@ import * as gql from "../VillageManagment/graphql";
 import { request } from "graphql-request";
 import { useNavigate } from "react-router-dom";
 
-export default function Signin() {
+export default function Signin({setDashShow}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -55,6 +55,7 @@ export default function Signin() {
         localStorage.setItem("userId", userId);
         localStorage.setItem("username", usernameX);
         localStorage.setItem("role", role);
+        setDashShow(true)
         navigate("/overView");
       }
     }

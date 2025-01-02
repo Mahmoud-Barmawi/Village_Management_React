@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MyButton from "../SharedComponents/MyButton";
 import DynamicText from "../SharedComponents/DynamicText";
 import FormField from "../SharedComponents/FormField";
@@ -7,16 +7,21 @@ import { request } from "graphql-request";
 import * as gql from "../VillageManagment/graphql.js";
 import { useNavigate } from "react-router-dom";
 
-export default function Signup() {
+export default function Signup({setDashShow}) {
   const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const fields = [
     { label: "Full Name", value: fullName, setter: setFullName },
     { label: "Username", value: username, setter: setUsername },
     { label: "Password", value: password, setter: setPassword },
   ];
+
+  useEffect(()=>{
+    setDashShow(false);
+  },[])
 
   const handleChange = (e, setter) => {
     setter(e.target.value);

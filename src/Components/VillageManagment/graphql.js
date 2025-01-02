@@ -21,10 +21,16 @@ export const villagesGQL =(page,limit,sort,search)=> gql`
     }
   }
 `;
+    // mutation($file: Upload!) {
+   	// 	singleUpload(file: $file, desc:"${desc}"){
+	// 	desc,
+    // 	url
+    // 	}
+ 	// }
 
 export function addVillageGQL(data) {
   return gql`
-	mutation ExampleQuery{
+	mutation($file: Upload!){
 		addVillage(
 		villageName: "${data["Village Name"]}",
 		regionDistrict:"${data["Region/District"]}",
@@ -32,7 +38,7 @@ export function addVillageGQL(data) {
 		latitude:${data["Latitude"]},
 		longitude:${data["Longitude"]},
 		tags:["${data["Categories/Tags"]}"],
-		image:"hello.png"
+		image:$file
 	) {
 		id
 		}
@@ -63,6 +69,7 @@ export function viewVillageGQL(id) {
 		populationGrowthRate
 		ageDistribution
 		genderRatios
+		tags
 		}
 	}
 	`;

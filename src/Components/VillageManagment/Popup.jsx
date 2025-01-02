@@ -20,7 +20,7 @@ export default function Popup({
     "Latitude": "latitude",
     "Longitude": "longitude",
     "Upload Image": "image",
-    "Categories/Tags": "categories",
+    "Categories/Tags": "tags",
     "Population Size": "populationSize",
     "Age Distribution": "ageDistribution",
     "Gender Ratios": "genderRatios",
@@ -35,7 +35,7 @@ export default function Popup({
   const handleInputChange = (field, value) => {
     
     if(field==="Gender Ratios" || field==="Age Distribution"){
-      value=value.split(',');
+      value=value.value.split(',');
     }
 
     if(value.files){

@@ -3,7 +3,7 @@ import './Dashboard.css'
 import { Link } from 'react-router-dom';
 import {useNavigate } from 'react-router-dom'
 
-const Dashboard = () => {
+const Dashboard = ({setDashShow}) => {
   const navigate=useNavigate();
   const [username,setUsername]=useState()
   function logOut(){
@@ -11,6 +11,7 @@ const Dashboard = () => {
     localStorage.removeItem("userId")
     localStorage.removeItem("role")
     localStorage.removeItem("username")
+    setDashShow(false);
     navigate("/")
   }
   useEffect(()=>{
