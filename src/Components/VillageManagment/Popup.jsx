@@ -8,23 +8,22 @@ export default function Popup({
   btn,
   closeFn,
   formBtnFn,
-  villageView
+  villageView,
 }) {
-
   const [formData, setFormData] = useState({});
 
-  const map= {
+  const map = {
     "Village Name": "villageName",
     "Region/District": "regionDistrict",
     "Land Area (sq km)": "landArea",
-    "Latitude": "latitude",
-    "Longitude": "longitude",
+    Latitude: "latitude",
+    Longitude: "longitude",
     "Upload Image": "image",
     "Categories/Tags": "tags",
     "Population Size": "populationSize",
     "Age Distribution": "ageDistribution",
     "Gender Ratios": "genderRatios",
-    "Population Growth Rate": "populationGrowthRate"
+    "Population Growth Rate": "populationGrowthRate",
   };
 
   function getCorrectText(field) {
@@ -33,16 +32,15 @@ export default function Popup({
   }
 
   const handleInputChange = (field, value) => {
-    
-    if(field==="Gender Ratios" || field==="Age Distribution"){
-      value=value.value.split(',');
+    if (field === "Gender Ratios" || field === "Age Distribution") {
+      value = value.value.split(",");
     }
 
-    if(value.files){
+    if (value.files) {
       setFormData({ ...formData, [field]: value.files[0] });
-    }else if(value.value){
+    } else if (value.value) {
       setFormData({ ...formData, [field]: value.value });
-    }else{
+    } else {
       setFormData({ ...formData, [field]: value });
     }
   };
@@ -67,6 +65,7 @@ export default function Popup({
               );
             })}
           </div>
+          <img src={fields.getCorrectText("Upload Image")} alt="village-img" />
         </div>
       ) : (
         <div className="stylePopups">
@@ -88,7 +87,7 @@ export default function Popup({
           ))}
 
           <input
-            onClick={()=>formBtnFn(formData)}
+            onClick={() => formBtnFn(formData)}
             type="button"
             value={btn}
             className="btns"
