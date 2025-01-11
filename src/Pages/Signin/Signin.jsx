@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 // import MyButton from "../../Components/MyButton";
 import MyButton from "../../Components/MyButton.jsx";
 import DynamicText from "../../Components/DynamicText";
@@ -12,6 +12,27 @@ export default function Signin({setDashShow}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("Token");
+    const userId = localStorage.getItem("userId") || null;
+
+    async function fetchUserRole() {
+      try {
+        let response = await request(
+          "http://localhost:3000/graphql",
+          gql.userGQL(userId),
+          null,
+          { token: token }
+        );
+
+        navigate("/overView");
+      } catch (error) {
+        console.log("error::", error);
+      }
+    }
+    fetchUserRole();
+  },[]);
 
   const fields = [
     { label: "Username", value: username, setter: setUsername },
