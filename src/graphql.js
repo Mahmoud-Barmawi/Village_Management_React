@@ -21,12 +21,6 @@ export const villagesGQL =(page,limit,sort,search)=> gql`
     }
   }
 `;
-    // mutation($file: Upload!) {
-   	// 	singleUpload(file: $file, desc:"${desc}"){
-	// 	desc,
-    // 	url
-    // 	}
- 	// }
 
 export function addVillageGQL(data) {
   return gql`
