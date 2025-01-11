@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import MyButton from "../SharedComponents/MyButton";
-import DynamicText from "../SharedComponents/DynamicText";
-import FormField from "../SharedComponents/FormField";
-import "./Signup.css";
+import MyButton from "../../Components/MyButton.jsx";
+import DynamicText from "../../Components/DynamicText.jsx";
+import FormField from "../../Components/FormField.jsx";
+// import "./Signup.css";
+import "../../styles/Signup.css";
 import { request } from "graphql-request";
-import * as gql from "../VillageManagment/graphql.js";
+import * as gql from "../../graphql.js";
 import { useNavigate } from "react-router-dom";
 
 export default function Signup({setDashShow}) {

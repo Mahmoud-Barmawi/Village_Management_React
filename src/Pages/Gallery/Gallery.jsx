@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "./Gallery.css";
-import MyButton from "../SharedComponents/MyButton.jsx";
+// import "./Gallery.css";
+import "../../styles/Gallery.css";
+import MyButton from "../../Components/MyButton.jsx";
 import Popup from "../VillageManagment/Popup.jsx";
-import * as gql from "../VillageManagment/graphql.js"
+import * as gql from "../../graphql.js"
 import request from "graphql-request";
 import { useNavigate } from "react-router-dom";
 

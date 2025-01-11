@@ -1,11 +1,12 @@
-import Dashboard from "./Components/Dashboard/Dashboard.jsx";
+import Dashboard from "./Components/Dashboard.jsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Overview from "./Components/Overview/Overview.jsx";
-import Gallery from "./Components/Gallery/Gallery.jsx";
-import Chat from "./Components/Chat/Chat.jsx";
-import VillageManagment from "./Components/VillageManagment/VillageManagment.jsx";
-import Signup from "./Components/Signup/Signup.jsx";
-import Signin from "./Components/Signin/Signin.jsx";
+
+import Overview from "./Pages/Overview/Overview.jsx";
+import Gallery from "./Pages/Gallery/Gallery.jsx";
+import Chat from "./Pages/Chat/Chat.jsx";
+import VillageManagment from "./Pages/VillageManagment/VillageManagment.jsx";
+import Signup from "./Pages/Signup/Signup.jsx";
+import Signin from "./Pages/Signin/Signin.jsx";
 import { useEffect, useState } from "react";
 function App() {
   const [dashShow,setDashShow]=useState(false);

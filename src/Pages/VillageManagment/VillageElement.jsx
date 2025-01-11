@@ -1,5 +1,5 @@
 import React from 'react'
-import MyButton from '../SharedComponents/MyButton'
+import MyButton from '../../Components/MyButton'
 
 export default function VillageElement({ id, villageName, regionDistrict, admin, viewFn,updateFn,deleteFn,updateDFn}) {
 	return (

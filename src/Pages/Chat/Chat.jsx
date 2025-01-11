@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Chat.css";
+// import "./Chat.css";
+import "../../styles/Chat.css";
 import Admins from "./Admins";
 import Message from "./Message";
-import * as gql from '../VillageManagment/graphql'
+import * as gql from '../../graphql'
 import request from "graphql-request";
 import Users from "./Users"
 import { useNavigate } from "react-router-dom";

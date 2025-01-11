@@ -1,14 +1,15 @@
 import React, { useRef, useState } from "react";
-import "./VillageManagment.css";
-import MyButton from "../SharedComponents/MyButton";
-import MyTextInput from "../SharedComponents/MyTextInput";
-import VillageElement from "./villageElement";
+// import "./VillageManagment.css";
+import "../../styles/VillageManagment.css";
+import MyButton from "../../Components/MyButton.jsx";
+import MyTextInput from "../../Components/MyTextInput.jsx";
+import VillageElement from "./villageElement.jsx";
 import { useEffect } from "react";
-import Popup from "./Popup";
+import Popup from "./Popup.jsx";
 import { request } from "graphql-request";
 import { useNavigate } from "react-router-dom";
 
-import * as gql from "./graphql.js";
+import * as gql from "../../graphql.js";
 
 const VillageManagment = () => {
   const addNewVillage = [

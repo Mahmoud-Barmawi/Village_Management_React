@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import "./Overview.css";
+// import "./Overview.css";
+import "../../styles/Overview.css";
 import PieChart from "./PieChart";
 import InfoCard from "./InfoCard.jsx";
 import Map from "./Map.jsx";
 import BarChart from "./BarChart.jsx";
 import { request } from "graphql-request";
-import * as gql from "../VillageManagment/graphql.js";
+import * as gql from "../../graphql.js";
 import { useNavigate } from "react-router-dom";
 
 const Overview = () => {

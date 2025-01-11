@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import './Dashboard.css'
+// import './Dashboard.css'
+import '../styles/Dashboard.css'
 import { Link } from 'react-router-dom';
 import {useNavigate } from 'react-router-dom'
 

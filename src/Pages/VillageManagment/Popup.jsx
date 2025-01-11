@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import FormField from "../SharedComponents/FormField";
+import FormField from "../../Components/FormField";
 
 export default function Popup({
   type,

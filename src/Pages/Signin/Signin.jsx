@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import MyButton from "../SharedComponents/MyButton";
-import DynamicText from "../SharedComponents/DynamicText";
-import FormField from "../SharedComponents/FormField";
-import "./Signin.css";
-import * as gql from "../VillageManagment/graphql";
+// import MyButton from "../../Components/MyButton";
+import MyButton from "../../Components/MyButton.jsx";
+import DynamicText from "../../Components/DynamicText";
+import FormField from "../../Components/FormField";
+import "../../styles/Signin.css";
+import * as gql from "../../graphql";
 import { request } from "graphql-request";
 import { useNavigate } from "react-router-dom";
 
